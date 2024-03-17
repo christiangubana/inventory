@@ -13,7 +13,7 @@ function authenticateToken(req, res, next) {
   });
 }
 
-function generateGenerateToken(username) {
+function generateAccessToken(username) {
   return jwt.sign({ data: username }, "Snippet_SecretKEY", {
     expiresIn: "1h",
   });
@@ -21,5 +21,5 @@ function generateGenerateToken(username) {
 
 module.exports = {
   authenticateToken,
-  generateGenerateToken,
+  generateAccessToken,
 };
