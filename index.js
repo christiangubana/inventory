@@ -5,15 +5,17 @@ const dbConfig = require("./config/db.config");
 const auth = require("./middlewares/auth");
 const errors = require("./middlewares/errors");
 
-const unless = require("express-unless");
+const { unless } = require("express-unless");
 
 const app = express();
 
 mongoose.Promise = global.Promise;
 mongoose
   .connect(dbConfig.db, {
-    userNewUrlParser: true,
-    userUnifiedTopology: true,
+    // userNewUrlParser: true,
+    // userUnifiedTopology: true, No longer supported
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
   .then(
     () => {
@@ -24,7 +26,7 @@ mongoose
     }
   );
 
-auth.authenticateToken.unless = unless; //Skip middlware when the condition is met.
+auth.authenticateToken.unless = unless;
 app.use(
   auth.authenticateToken.unless({
     path: [
