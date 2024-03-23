@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Layout/NavBar";
 import Registration from "./components/Register";
@@ -16,12 +18,11 @@ function App() {
     }
   }, []);
 
-  console.log("IsLoggedIn:", isLoggedIn); // Log isLoggedIn value
-
   return (
     <Router>
       <>
         <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+        <ToastContainer /> {/* Add this line */}
         {/* Log isLoggedIn value to confirm */}
         <Routes>
           {/* Log the isLoggedIn value again to confirm */}

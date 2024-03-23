@@ -1,12 +1,17 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import axios from "axios";
 
 const Registration = () => {
+  const [isLoading, setIsLoading] = useState(false); // State for loading indicator
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -17,14 +22,29 @@ const Registration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); // Start loading
     try {
       const response = await axios.post(
         "http://localhost:4000/users/register",
         formData
       );
+      navigate("/dashboard");
       console.log(response.data); // Handle success response
     } catch (error) {
-      console.error("Registration failed:", error); // Handle error
+      console.error("Regitration failed:", error); // Handle error
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        // Display server response error message
+        toast.error(error.response.data.message);
+      } else {
+        // Display generic error message if server response is not available
+        toast.error("Failed to register. Please try again.");
+      }
+    } finally {
+      setIsLoading(false); // Stop loading regardless of success or failure
     }
   };
 
@@ -89,8 +109,31 @@ const Registration = () => {
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              disabled={isLoading} // Disable button when loading
             >
-              Register
+              {isLoading ? (
+                <svg
+                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 4.418 3.582 8 8 8v-4c-2.636 0-5.003-1.062-6.743-2.787l1.415-1.414z"
+                  ></path>
+                </svg>
+              ) : null}
+              {isLoading ? "Registering..." : "Register"}
             </button>
           </div>
         </form>

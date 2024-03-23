@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
-  console.log(`It's ${isLoggedIn} from NavBar.jsx`)
   const navigate = useNavigate();
 
   const handleLogout = () => {
