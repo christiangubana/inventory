@@ -16,15 +16,13 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
         <div className="relative flex items-center justify-between h-16">
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex-shrink-0 flex items-center">
-              <span className="text-white text-lg font-bold">My App</span>
+              <span className="text-white text-lg font-bold">GotBot</span>
             </div>
             <div className="hidden sm:block sm:ml-6">
               <div className="flex space-x-4">
                 {isLoggedIn ? (
                   <>
                     <Link to="/dashboard" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</Link>
-                    <Link to="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Profile</Link>
-                    <Link to="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Settings</Link>
                     <button onClick={handleLogout} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Logout</button>
                   </>
                 ) : (
