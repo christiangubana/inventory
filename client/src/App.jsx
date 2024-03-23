@@ -1,7 +1,14 @@
 import "./App.css";
+import Navbar from "./components/Layout/NavBar";
+import Registration from "./components/Register";
 
 function App() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  return (
+    <>
+      <Navbar />
+      <Registration />
+    </>
+  );
 }
 
 export default App;

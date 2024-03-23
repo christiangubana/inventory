@@ -1,11 +1,15 @@
 const express = require("express");
 const app = express();
+const cors = require('cors');
 const mongoose = require("mongoose");
 const dbConfig = require("./config/db.config");
 
 const auth = require("./middlewares/auth.js");
 const errors = require("./middlewares/errors.js");
 const { unless } = require("express-unless");
+
+//PORT config
+var PORT = 4000;
 
 mongoose.Promise = global.Promise;
 mongoose
@@ -21,6 +25,9 @@ mongoose
       console.log("Database can't be connected: " + error);
     }
   );
+
+  //Enable CORS for all the routes
+  app.use(cors());
 
   auth.authenticateToken.unless = unless;
   app.use(
@@ -42,6 +49,7 @@ mongoose
   app.use(errors.errorHandler);
   
   // listen for requests
-  app.listen(process.env.port || 4000, function () {
+  app.listen(process.env.port || PORT, function () {
     console.log("Ready to Go!");
+    console.log(`Server is running on port ${PORT}`);
   });
