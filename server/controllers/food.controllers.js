@@ -42,3 +42,12 @@ exports.deleteFood = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getAllFood = async (req, res, next) => {
+  try {
+    const foods = await Food.find();
+    res.json(foods);
+  } catch (error) {
+    next(error);
+  }
+};

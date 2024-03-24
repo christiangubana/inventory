@@ -1,15 +1,12 @@
 const express = require("express");
 const app = express();
-const cors = require('cors');
+const cors = require("cors");
 const mongoose = require("mongoose");
 const dbConfig = require("./config/db.config");
 
 const auth = require("./middlewares/auth.js");
 const errors = require("./middlewares/errors.js");
 const { unless } = require("express-unless");
-
-//PORT config
-const PORT = 4000;
 
 mongoose.Promise = global.Promise;
 mongoose
@@ -26,28 +23,30 @@ mongoose
     }
   );
 
-  //Enable CORS for all the routes
-  app.use(cors());
+// Enable CORS for all routes
+app.use(cors());
 
-  auth.authenticateToken.unless = unless;
-  app.use(
-    auth.authenticateToken.unless({
-      path: [
-        { url: "/users/login", methods: ["POST"] },
-        { url: "/users/register", methods: ["POST"] },
-      ],
-    })
-  );
+// Configure authentication middleware
+auth.authenticateToken.unless = unless;
+app.use(
+  auth.authenticateToken.unless({
+    path: [
+      { url: "/api/login", methods: ["POST"] },
+      { url: "/api/register", methods: ["POST"] },
+    ],
+  })
+);
 
-  app.use(express.json());
+app.use(express.json());
 
-  // initialize routes
-  app.use("/users", require("./routes/users.routes"));
-  app.use("/foods", require("./routes/food.routes")); // Add this line to integrate food routes
+// Initialize routes
+app.use("/api", require("./routes/users.routes"));
+app.use("/api/foods", require("./routes/food.routes")); // Prefix with /api for food routes
 
-  app.use(errors.errorHandler);
-  
-  // listen for requests
-  app.listen(process.env.port || PORT, function () {
-    console.log(`Server is running on port ${PORT}`);
-  });
+app.use(errors.errorHandler);
+
+// Listen for requests
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, function () {
+  console.log(`Server is running on port ${PORT}`);
+});

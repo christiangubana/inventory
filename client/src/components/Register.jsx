@@ -25,7 +25,7 @@ const Registration = () => {
     setIsLoading(true); // Start loading
     try {
       const response = await axios.post(
-        "http://localhost:4000/users/register",
+        "http://localhost:4000/api/register",
         formData
       );
       navigate("/dashboard");
