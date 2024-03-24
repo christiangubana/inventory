@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const useAuth = (isLoggedIn) => {
-    console.log(isLoggedIn)
   const navigate = useNavigate();
 
   useEffect(() => {
