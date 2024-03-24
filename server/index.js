@@ -9,7 +9,7 @@ const errors = require("./middlewares/errors.js");
 const { unless } = require("express-unless");
 
 //PORT config
-var PORT = 4000;
+const PORT = 4000;
 
 mongoose.Promise = global.Promise;
 mongoose
@@ -35,8 +35,6 @@ mongoose
       path: [
         { url: "/users/login", methods: ["POST"] },
         { url: "/users/register", methods: ["POST"] },
-        { url: "/users/otpLogin", methods: ["POST"] },
-        { url: "/users/verifyOTP", methods: ["POST"] },
       ],
     })
   );
@@ -45,7 +43,8 @@ mongoose
 
   // initialize routes
   app.use("/users", require("./routes/users.routes"));
-  
+  app.use("/foods", require("./routes/food.routes")); // Add this line to integrate food routes
+
   app.use(errors.errorHandler);
   
   // listen for requests
