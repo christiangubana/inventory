@@ -16,7 +16,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
         <div className="relative flex items-center justify-between h-16">
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex-shrink-0 flex items-center">
-              <span className="text-white text-lg font-bold">GotBot</span>
+              <span className="text-white text-lg font-bold">CheFBot</span>
             </div>
             <div className="hidden sm:block sm:ml-6">
               <div className="flex space-x-4">
