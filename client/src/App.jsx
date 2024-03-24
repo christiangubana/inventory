@@ -26,7 +26,7 @@ function App() {
           {/* Redirect to dashboard if logged in and token is available */}
           {isLoggedIn && <Route path="/" element={<Navigate to="/dashboard" />} />}
           {/* Dashboard route */}
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard isLoggedIn={isLoggedIn}/>} />
           {/* Login route */}
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
           {/* Registration route */}

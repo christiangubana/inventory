@@ -1,7 +1,10 @@
 // Dashboard.jsx
-import React from 'react';
+import useAuth from "../hooks/useAuth";
 
-const Dashboard = () => {
+const Dashboard = ({ isLoggedIn }) => {
+  // use HOC to precent user from accessing Dashboard from the URL if not logedIn
+  useAuth(isLoggedIn);
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="py-6">
