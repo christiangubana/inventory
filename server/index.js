@@ -49,6 +49,5 @@ mongoose
   
   // listen for requests
   app.listen(process.env.port || PORT, function () {
-    console.log("Ready to Go!");
     console.log(`Server is running on port ${PORT}`);
   });
