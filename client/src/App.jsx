@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Layout/NavBar";
@@ -11,7 +11,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // Check if user is logged in on component mount
     const token = localStorage.getItem("token");
     if (token) {
       setIsLoggedIn(true);
@@ -23,13 +22,17 @@ function App() {
       <>
         <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
         <ToastContainer /> {/* Add this line */}
-        {/* Log isLoggedIn value to confirm */}
         <Routes>
-          {/* Log the isLoggedIn value again to confirm */}
-          <Route path="/dashboard" element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />} />
+          {/* Redirect to dashboard if logged in and token is available */}
+          {isLoggedIn && <Route path="/" element={<Navigate to="/dashboard" />} />}
+          {/* Dashboard route */}
+          <Route path="/dashboard" element={<Dashboard />} />
+          {/* Login route */}
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+          {/* Registration route */}
           <Route path="/register" element={<Registration setIsLoggedIn={setIsLoggedIn} />} />
-          <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
+          {/* If not logged in, redirect to login */}
+          {!isLoggedIn && <Route path="*" element={<Navigate to="/login" />} />}
         </Routes>
       </>
     </Router>
