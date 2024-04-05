@@ -37,9 +37,11 @@ async function register(params, callback) {
   user
     .save()
     .then((response) => {
+      console.log('User saved successfully:', response)
       return callback(null, response);
     })
     .catch((error) => {
+      console.log('Error saving user:', error)
       return callback(error);
     });
 }
