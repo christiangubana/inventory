@@ -28,14 +28,14 @@ const AddFoodForm = ({ onAdd }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token"); // Retrieve token from localStorage
-  
+
     const formDataToSend = new FormData();
     formDataToSend.append('title', formData.title);
     formDataToSend.append('description', formData.description);
     formDataToSend.append('image', formData.image);
 
     try {
-        const response = await axios.post('http://localhost:4000/api/foods', formDataToSend, {
+      const response = await axios.post('http://localhost:4000/api/foods', formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`
@@ -65,7 +65,8 @@ const AddFoodForm = ({ onAdd }) => {
         <label htmlFor="image">Image:</label>
         <input type="file" id="image" name="image" accept="image/*" onChange={handleImageChange} />
       </div>
-      <button type="submit">Add Food Item</button>
+      <button type="submit" className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >Add Food Item</button>
     </form>
   );
 };

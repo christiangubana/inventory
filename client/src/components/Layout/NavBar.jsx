@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn, userName }) => {
+  console.log(userName)
   const navigate = useNavigate();
 
   const handleLogout = () => {

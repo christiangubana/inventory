@@ -30,29 +30,27 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
         "http://localhost:4000/api/login",
         formData
       );
-      const token = response.data.data.token; // Assuming token is returned from server
-      localStorage.setItem("token", token); // Store token in localStorage
-      setIsLoggedIn(true); // Update state to indicate user is logged in
-      setUserName(formData.username); // Set the username
+      const token = response.data.data.token; 
+      localStorage.setItem("token", token); 
+      setIsLoggedIn(true); 
+      setUserName(formData.username);
       toast.success(response.data.message, {
         position: "top-center",
       });
       navigate("/dashboard");
     } catch (error) {
-      console.error("Login failed:", error); // Handle error
+      console.error("Login failed:", error); 
       if (
         error.response &&
         error.response.data &&
         error.response.data.message
       ) {
-        // Display server response error message
         toast.error(error.response.data.message);
       } else {
-        // Display generic error message if server response is not available
         toast.error("Failed to login. Please try again.");
       }
     } finally {
-      setIsLoading(false); // Stop loading regardless of success or failure
+      setIsLoading(false); 
     }
   };
 
