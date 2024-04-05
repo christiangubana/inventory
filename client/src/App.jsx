@@ -22,18 +22,17 @@ function App() {
     <Router>
       <>
         <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userName={userName} />
-        <ToastContainer /> {/* Add this line */}
+        <ToastContainer />
         <Routes>
-          {/* Redirect to dashboard if logged in and token is available */}
-          {isLoggedIn && <Route path="/" element={<Navigate to="/dashboard" />} />}
-          {/* Dashboard route */}
-          <Route path="/dashboard" element={<Dashboard isLoggedIn={isLoggedIn} userName={userName} />} />
-          {/* Login route */}
-          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserName={setUserName} />} />
-          {/* Registration route */}
-          <Route path="/register" element={<Registration setIsLoggedIn={setIsLoggedIn} />} />
-          {/* If not logged in, redirect to login */}
-          {!isLoggedIn && <Route path="*" element={<Navigate to="/login" />} />}
+          {isLoggedIn ? (
+            <Route path="/dashboard" element={<Dashboard isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+          ) : (
+            <>
+              <Route path="/" element={<Navigate to="/login" />} />
+              <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserName={setUserName} />} />
+              <Route path="/register" element={<Registration setIsLoggedIn={setIsLoggedIn} />} />
+            </>
+          )}
         </Routes>
       </>
     </Router>

@@ -1,6 +1,14 @@
 // controllers/food.controller.js
 const Food = require("../models/food.model");
 const multer = require("multer");
+const fs = require('fs');
+
+
+// Create a directory for storing uploaded images if it doesn't exist
+const uploadDirectory = './uploads';
+if (!fs.existsSync(uploadDirectory)) {
+  fs.mkdirSync(uploadDirectory);
+}
 
 // Multer storage settings
 const storage = multer.diskStorage({
@@ -8,11 +16,10 @@ const storage = multer.diskStorage({
     cb(null, "./uploads/"); // Destination folder for storing uploaded images
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname); // Unique filename
+    cb(null, Date.now() + "-" + file.originalname); 
   },
 });
 
-// Initialize Multer with the storage settings
 const upload = multer({ storage: storage }).single("image");
 
 exports.addFood = (req, res, next) => {
@@ -24,7 +31,7 @@ exports.addFood = (req, res, next) => {
     }
     try {
       const { title, description } = req.body;
-      const image = req.file ? req.file.path : ""; // If image uploaded, set image path, otherwise empty string
+      const image = req.file ? req.file.path : ""; 
       const food = new Food({ title, description, image });
       await food.save();
       res.status(201).json({ message: "Food item added successfully", food });
@@ -46,7 +53,7 @@ exports.updateFood = (req, res, next) => {
       const { title, description } = req.body;
       let updatedFoodData = { title, description };
       if (req.file) {
-        updatedFoodData.image = req.file.path; // Update image if new image is uploaded
+        updatedFoodData.image = req.file.path; 
       }
       const updatedFood = await Food.findByIdAndUpdate(id, updatedFoodData, {
         new: true,
