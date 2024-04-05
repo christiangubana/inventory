@@ -13,7 +13,7 @@ exports.register = (req, res, next) => {
       return next(error);
     }
     return res.status(200).send({
-      message: "Success",
+      message: "You have registered successfully!",
       data: results,
     });
   });
@@ -27,7 +27,7 @@ exports.login = (req, res, next) => {
       return next(error);
     }
     return res.status(200).send({
-      message: "Success",
+      message: "You have login successfully!",
       data: results,
     });
   });

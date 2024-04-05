@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = ({ setIsLoggedIn }) => {
   const [formData, setFormData] = useState({
@@ -33,16 +33,23 @@ const Login = ({ setIsLoggedIn }) => {
       const token = response.data.data.token; // Assuming token is returned from server
       localStorage.setItem("token", token); // Store token in localStorage
       setIsLoggedIn(true); // Update state to indicate user is logged in
-      navigate('/dashboard')
+      toast.success(response.data.message, {
+        position: "top-center",
+      });
+      navigate("/dashboard");
     } catch (error) {
-        console.error("Login failed:", error); // Handle error
-        if (error.response && error.response.data && error.response.data.message) {
-          // Display server response error message
-          toast.error(error.response.data.message); 
-        } else {
-          // Display generic error message if server response is not available
-          toast.error("Failed to login. Please try again."); 
-        }
+      console.error("Login failed:", error); // Handle error
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        // Display server response error message
+        toast.error(error.response.data.message);
+      } else {
+        // Display generic error message if server response is not available
+        toast.error("Failed to login. Please try again.");
+      }
     } finally {
       setIsLoading(false); // Stop loading regardless of success or failure
     }
