@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
+const Navbar = ({ isLoggedIn, setIsLoggedIn, userName }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -13,9 +13,9 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   return (
     <nav className="bg-gray-800">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-        <div className="relative flex items-center justify-between h-16">
-          <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex-shrink-0 flex items-center">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
               <span className="text-white text-lg font-bold">CheFBot</span>
             </div>
             <div className="hidden sm:block sm:ml-6">
@@ -33,6 +33,16 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
                 )}
               </div>
             </div>
+          </div>
+          <div className="flex items-center">
+            {isLoggedIn && (
+              <div className="flex items-center text-gray-300">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="mr-4">{userName}</span>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Login = ({ setIsLoggedIn }) => {
+const Login = ({ setIsLoggedIn, setUserName }) => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -33,6 +33,7 @@ const Login = ({ setIsLoggedIn }) => {
       const token = response.data.data.token; // Assuming token is returned from server
       localStorage.setItem("token", token); // Store token in localStorage
       setIsLoggedIn(true); // Update state to indicate user is logged in
+      setUserName(formData.username); // Set the username
       toast.success(response.data.message, {
         position: "top-center",
       });

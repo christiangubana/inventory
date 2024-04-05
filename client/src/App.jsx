@@ -9,6 +9,7 @@ import Dashboard from "./components/Dashboard";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState(""); // State to store user's name
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -20,15 +21,15 @@ function App() {
   return (
     <Router>
       <>
-        <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+        <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userName={userName} />
         <ToastContainer /> {/* Add this line */}
         <Routes>
           {/* Redirect to dashboard if logged in and token is available */}
           {isLoggedIn && <Route path="/" element={<Navigate to="/dashboard" />} />}
           {/* Dashboard route */}
-          <Route path="/dashboard" element={<Dashboard isLoggedIn={isLoggedIn}/>} />
+          <Route path="/dashboard" element={<Dashboard isLoggedIn={isLoggedIn} userName={userName} />} />
           {/* Login route */}
-          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserName={setUserName} />} />
           {/* Registration route */}
           <Route path="/register" element={<Registration setIsLoggedIn={setIsLoggedIn} />} />
           {/* If not logged in, redirect to login */}

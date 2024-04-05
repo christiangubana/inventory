@@ -1,8 +1,7 @@
-// Dashboard.jsx
 import useAuth from "../hooks/useAuth";
 
-const Dashboard = ({ isLoggedIn }) => {
-  // use HOC to precent user from accessing Dashboard from the URL if not logedIn
+const Dashboard = ({ isLoggedIn, userName }) => {
+  // use HOC to precent user from accessing Dashboard from the URL if not loggedIn
   useAuth(isLoggedIn);
 
   return (
