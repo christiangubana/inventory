@@ -31,10 +31,10 @@ exports.addFood = (req, res, next) => {
     }
     try {
       const { title, description } = req.body;
-      const image = req.file ? req.file.path : ""; 
+      const image = req.file ? req.file.path.replace('\\', '/') : '';
       const food = new Food({ title, description, image });
       await food.save();
-      res.status(201).json({ message: "Food item added successfully", food });
+      res.status(201).json({ message: "Food item added successfully", food: food });
     } catch (error) {
       next(error);
     }

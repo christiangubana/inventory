@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const dbConfig = require("./config/db.config");
+const path = require('path');
 
 const auth = require("./middlewares/auth.js");
 const errors = require("./middlewares/errors.js");
@@ -42,6 +43,7 @@ app.use(express.json());
 // Initialize routes
 app.use("/api", require("./routes/users.routes"));
 app.use("/api/foods", require("./routes/food.routes")); // Prefix with /api for food routes
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 app.use(errors.errorHandler);
 

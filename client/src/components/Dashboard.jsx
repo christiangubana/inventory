@@ -23,8 +23,7 @@ const Dashboard = ({ isLoggedIn }) => {
                 <div className="px-4 py-5 sm:p-6">
                   <h2 className="text-xl font-semibold text-gray-800">{food.title}</h2>
                   <p className="mt-2 text-sm text-gray-500">{food.description}</p>
-                  {/* <img src={food.image} alt={food.title} className="mt-4" /> */}
-                  <img src={food.image.replace(/\\/g, '/')} alt={food.title} className="mt-4" /> 
+                  <img src={food.image} alt={food.title} className="mt-4" />
                 </div>
               </div>
             ))}
