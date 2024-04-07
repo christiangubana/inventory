@@ -1,8 +1,7 @@
-// AddFoodForm.jsx
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
   const [formData, setFormData] = useState({
@@ -37,7 +36,7 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token"); 
+    const token = localStorage.getItem('token');
 
     const formDataToSend = new FormData();
     formDataToSend.append('title', formData.title);
@@ -77,21 +76,49 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
       console.error('Error adding/updating food item:', error);
     }
   };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="title">Title:</label>
-        <input type="text" id="title" name="title" value={formData.title} onChange={handleChange} />
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+      <div className="mb-4">
+        <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+          Title:
+        </label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
       </div>
-      <div>
-        <label htmlFor="description">Description:</label>
-        <textarea id="description" name="description" value={formData.description} onChange={handleChange} />
+      <div className="mb-4">
+        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+          Description:
+        </label>
+        <textarea
+          id="description"
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          rows="3"
+          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        ></textarea>
       </div>
-      <div>
-        <label htmlFor="image">Image:</label>
-        <input type="file" id="image" name="image" accept="image/*" onChange={handleImageChange} />
+      <div className="mb-4">
+        <label htmlFor="image" className="block text-sm font-medium text-gray-700">
+          Image:
+        </label>
+        <input
+          type="file"
+          id="image"
+          name="image"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
       </div>
-      <div className="mt-4">
+      <div className="flex justify-end">
         <button
           type="submit"
           className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
