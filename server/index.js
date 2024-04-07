@@ -22,7 +22,7 @@ mongoose
   .connect(process.env.DB_URI,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
-})
+},6000000)
   .then(
     () => {
       console.log("Database connected");
