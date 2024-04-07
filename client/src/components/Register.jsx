@@ -136,6 +136,15 @@ const Registration = () => {
               {isLoading ? "Registering..." : "Register"}
             </button>
           </div>
+          <p class="flex mt-6 text-center">
+            <span class="pr-2"> Already have an account?</span>
+            <a
+              href="/login"
+              class="text-primary focus:outline-none dark:text-primary-400"
+            >
+              Login
+            </a>
+          </p>
         </form>
       </div>
     </div>

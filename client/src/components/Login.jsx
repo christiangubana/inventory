@@ -30,16 +30,16 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
         "http://localhost:4000/api/login",
         formData
       );
-      const token = response.data.data.token; 
-      localStorage.setItem("token", token); 
-      setIsLoggedIn(true); 
+      const token = response.data.data.token;
+      localStorage.setItem("token", token);
+      setIsLoggedIn(true);
       setUserName(formData.username);
       toast.success(response.data.message, {
         position: "top-center",
       });
       navigate("/dashboard");
     } catch (error) {
-      console.error("Login failed:", error); 
+      console.error("Login failed:", error);
       if (
         error.response &&
         error.response.data &&
@@ -50,7 +50,7 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
         toast.error("Failed to login. Please try again.");
       }
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
   };
 
@@ -141,6 +141,15 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
               {isLoading ? "Logging in..." : "Login"}
             </button>
           </div>
+          <p class="flex mt-6 text-center">
+            <span class="mr-2">Don't have an account?</span>
+            <a
+              href="/register"
+              class="text-primary focus:outline-none dark:text-primary-400"
+            >
+              Register
+            </a>
+          </p>
         </form>
       </div>
     </div>
