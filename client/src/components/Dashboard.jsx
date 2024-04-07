@@ -22,7 +22,7 @@ const Dashboard = ({ isLoggedIn }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setFoods(response.data); // Set foods state with fetched data
+      setFoods(response.data); 
     } catch (error) {
       console.error("Error fetching foods:", error);
       toast.error(error.response.data.message);
@@ -82,7 +82,6 @@ const Dashboard = ({ isLoggedIn }) => {
       toast.success("Food item updated successfully", {
         position: "top-center",
       });
-      // After successful update, reload the page
       window.location.reload();
       setEditingFood(null); // Clear editing state
     } catch (error) {
