@@ -8,13 +8,21 @@ const path = require('path');
 const auth = require("./middlewares/auth.js");
 const errors = require("./middlewares/errors.js");
 const { unless } = require("express-unless");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 mongoose.Promise = global.Promise;
+// mongoose
+//   .connect(dbConfig.db, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
 mongoose
-  .connect(dbConfig.db, {
+  .connect(process.env.DB_URI,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  })
+})
   .then(
     () => {
       console.log("Database connected");
@@ -43,7 +51,8 @@ app.use(express.json());
 // Initialize routes
 app.use("/api", require("./routes/users.routes"));
 app.use("/api/foods", require("./routes/food.routes")); // Prefix with /api for food routes
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+app.use(express.static("uploads"));
+// app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 app.use(errors.errorHandler);
 

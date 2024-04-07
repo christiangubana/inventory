@@ -4,13 +4,11 @@ const multer = require("multer");
 const fs = require('fs');
 
 
-// Create a directory for storing uploaded images if it doesn't exist
 const uploadDirectory = './uploads';
 if (!fs.existsSync(uploadDirectory)) {
   fs.mkdirSync(uploadDirectory);
 }
 
-// Multer storage settings
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads/"); // Destination folder for storing uploaded images
@@ -34,7 +32,7 @@ exports.addFood = (req, res, next) => {
       const image = req.file ? req.file.path.replace('\\', '/') : '';
       const food = new Food({ title, description, image });
       await food.save();
-      res.status(201).json({ message: "Food item added successfully", food: food });
+      res.status(201).json({ message: "Food item added successfully", food });
     } catch (error) {
       next(error);
     }
