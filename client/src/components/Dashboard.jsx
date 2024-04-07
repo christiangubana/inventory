@@ -5,36 +5,57 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from 'axios';
 
 const Dashboard = ({ isLoggedIn }) => {
   useAuth(isLoggedIn);
 
   const [foods, setFoods] = useState([]);
+  const token = localStorage.getItem("token"); // Retrieve token from localStorage
+
+  const fetchFoods = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/api/foods', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      });
+      setFoods(response.data); // Set foods state with fetched data
+    } catch (error) {
+      console.error('Error fetching foods:', error);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchFoods();
+  }, []);
 
   const handleAddFood = (food) => {
     setFoods([...foods, food]);
   };
 
-  const token = localStorage.getItem("token"); // Retrieve token from localStorage
+  const handleDelete = async (foodId) => {
+    try {
+      await axios.delete(`http://localhost:4000/api/foods/${foodId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      });
+      setFoods(foods.filter(food => food._id !== foodId));
+      toast.success('Food item deleted successfully', {
+        position: "top-center",
+      });
+    } catch (error) {
+      console.error('Error deleting food item:', error);
+      toast.error(error.response.data.message);
+    }
+  };
 
-  useEffect(() => {
-    const fetchFoods = async () => {
-      try {
-        const response = await fetch('http://localhost:4000/api/foods', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          },
-        });
-        const data = await response.json();
-        setFoods(data); 
-      } catch (error) {
-        console.error('Error fetching foods:', error);
-        toast.error(error.response.data.message);
-      }
-    };
-
-    fetchFoods();
-  }, []);
+  const handleEdit = (foodId) => {
+    // Implement edit functionality if needed
+    console.log('Edit food item:', foodId);
+  };
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -108,4 +129,3 @@ const Dashboard = ({ isLoggedIn }) => {
 };
 
 export default Dashboard;
-
