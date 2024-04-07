@@ -68,7 +68,7 @@ const Dashboard = ({ isLoggedIn }) => {
       setIsLoading(true);
       const response = await axios.put(
         `http://localhost:4000/api/foods/${updatedFood._id}`,
-        updatedFood,
+        // updatedFood,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -15,7 +15,7 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
       setFormData({
         title: initialData.title,
         description: initialData.description,
-        image: null, // Image is not editable for now
+        image: initialData.image || null, // Initialize image from initial data
       });
     }
   }, [initialData]);
@@ -30,7 +30,7 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
   const handleImageChange = (e) => {
     setFormData({
       ...formData,
-      image: e.target.files[0],
+      image: e.target.files[0], // Update image field with the selected file
     });
   };
 
@@ -48,12 +48,16 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
     try {
       if (initialData) {
         // Update existing food item
-        const response = await axios.put(`http://localhost:4000/api/foods/${initialData._id}`, formDataToSend, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.put(
+          `http://localhost:4000/api/foods/${initialData._id}`,
+          formDataToSend,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         onUpdate(response.data); // Pass updated food item to parent component
         toast.success('Food item updated successfully', {
           position: 'top-center',
@@ -71,6 +75,14 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
           position: 'top-center',
         });
       }
+
+      // Clear form fields after successful submission
+      setFormData({
+        title: '',
+        description: '',
+        image: null,
+      });
+
     } catch (error) {
       toast.error(error.response.data.message);
       console.error('Error adding/updating food item:', error);
