@@ -129,13 +129,13 @@ const Dashboard = ({ isLoggedIn }) => {
                   <thead className="bg-gray-50">
                     <tr>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        ID
+                        Id
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Image
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Date
+                        Create At
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Name
@@ -201,8 +201,7 @@ const Dashboard = ({ isLoggedIn }) => {
           )}
           {editingFood ? (
             <AddFoodForm
-              onAdd={() => handleAddFood()}
-              initialData={editingFood}
+              onAdd={editingFood}
               onUpdate={handleUpdateFood}
               onCancelEdit={handleCancelEdit}
             />

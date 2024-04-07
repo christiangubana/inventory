@@ -28,7 +28,7 @@ function App() {
           {isLoggedIn ? (
             <>
               <Route path="/dashboard" element={<Dashboard isLoggedIn={isLoggedIn} />} />
-              <Route path="/add" element={<AddFoodForm />} /> {/* Route for AddFoodForm */}
+              <Route path="/add" element={<AddFoodForm isLoggedIn={isLoggedIn}/>} /> {/* Route for AddFoodForm */}
             </>
           ) : (
             <>

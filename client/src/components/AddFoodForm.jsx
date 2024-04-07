@@ -82,7 +82,6 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
           position: "top-center",
         });
       }
-
       // Redirect to dashboard after successful submission
       navigate("/dashboard");
 
