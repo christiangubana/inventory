@@ -1,15 +1,25 @@
 // AddFoodForm.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AddFoodForm = ({ onAdd }) => {
+const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     image: null,
   });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        title: initialData.title,
+        description: initialData.description,
+        image: null, // Image is not editable for now
+      });
+    }
+  }, [initialData]);
 
   const handleChange = (e) => {
     setFormData({
@@ -27,30 +37,46 @@ const AddFoodForm = ({ onAdd }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token"); // Retrieve token from localStorage
+    const token = localStorage.getItem("token"); 
 
     const formDataToSend = new FormData();
     formDataToSend.append('title', formData.title);
     formDataToSend.append('description', formData.description);
-    formDataToSend.append('image', formData.image);
+    if (formData.image) {
+      formDataToSend.append('image', formData.image);
+    }
 
     try {
-      const response = await axios.post('http://localhost:4000/api/foods', formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}`
-        },
-      });
-      onAdd(response.data.food);
-      toast.success(response.data.message, {
-        position: "top-center",
-      });
+      if (initialData) {
+        // Update existing food item
+        const response = await axios.put(`http://localhost:4000/api/foods/${initialData._id}`, formDataToSend, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        onUpdate(response.data); // Pass updated food item to parent component
+        toast.success('Food item updated successfully', {
+          position: 'top-center',
+        });
+      } else {
+        // Add new food item
+        const response = await axios.post('http://localhost:4000/api/foods', formDataToSend, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        onAdd(response.data.food);
+        toast.success(response.data.message, {
+          position: 'top-center',
+        });
+      }
     } catch (error) {
       toast.error(error.response.data.message);
-      console.error('Error adding food item:', error);
+      console.error('Error adding/updating food item:', error);
     }
   };
-
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -65,8 +91,23 @@ const AddFoodForm = ({ onAdd }) => {
         <label htmlFor="image">Image:</label>
         <input type="file" id="image" name="image" accept="image/*" onChange={handleImageChange} />
       </div>
-      <button type="submit" className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >Add Food Item</button>
+      <div className="mt-4">
+        <button
+          type="submit"
+          className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          {initialData ? 'Update Food Item' : 'Add Food Item'}
+        </button>
+        {initialData && (
+          <button
+            type="button"
+            onClick={onCancelEdit}
+            className="ml-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-gray-700 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+          >
+            Cancel
+          </button>
+        )}
+      </div>
     </form>
   );
 };
