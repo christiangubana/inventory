@@ -3,6 +3,8 @@ import useAuth from "../hooks/useAuth";
 import AddFoodForm from "./AddFoodForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Dashboard = ({ isLoggedIn }) => {
   useAuth(isLoggedIn);
@@ -13,15 +15,21 @@ const Dashboard = ({ isLoggedIn }) => {
     setFoods([...foods, food]);
   };
 
-  // Assume you have an API fetch function to get all foods
+  const token = localStorage.getItem("token"); // Retrieve token from localStorage
+
   useEffect(() => {
     const fetchFoods = async () => {
       try {
-        const response = await fetch('your-api-url-to-fetch-foods');
+        const response = await fetch('http://localhost:4000/api/foods', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+        });
         const data = await response.json();
-        setFoods(data); // Set foods state with fetched data
+        setFoods(data); 
       } catch (error) {
         console.error('Error fetching foods:', error);
+        toast.error(error.response.data.message);
       }
     };
 
