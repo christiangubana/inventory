@@ -33,8 +33,19 @@ const Dashboard = ({ isLoggedIn }) => {
     fetchFoods();
   }, [token, setFoods]);
 
-  const handleAddFood = (food) => {
-    setFoods([...foods, food]);
+  // const handleAddFood = (food) => {
+  //   setFoods([...foods, food]);
+  // };
+
+  const handleAddFood = async (newFood) => {
+    try {
+      // Code to add new food item to state or perform necessary actions
+      setFoods([...foods, newFood]);
+    } catch (error) {
+      toast.success(`Error adding food:, ${error}`, {
+        position: "top-center",
+      });
+    }
   };
 
   const handleDelete = async (foodId) => {
@@ -94,6 +105,7 @@ const Dashboard = ({ isLoggedIn }) => {
   const handleCancelEdit = () => {
     setEditingFood(null); // Clear editing state
   };
+
   // Function to format createdAt date string
   const formatDate = (createdAt) => {
     const date = new Date(createdAt);
@@ -191,15 +203,17 @@ const Dashboard = ({ isLoggedIn }) => {
               No items, start adding items
             </h1>
           )}
-          {editingFood && (
+          {editingFood ? (
             <AddFoodForm
-              onAdd={handleAddFood}
+              onAdd={() => handleAddFood()}
               initialData={editingFood}
               onUpdate={handleUpdateFood}
               onCancelEdit={handleCancelEdit}
             />
+          ) : (
+            <AddFoodForm onAdd={handleAddFood} />
           )}
-          {!editingFood && <AddFoodForm onAdd={handleAddFood} />}
+          {/* {!editingFood && <AddFoodForm onAdd={handleAddFood} />} */}
         </div>
       </div>
     </div>

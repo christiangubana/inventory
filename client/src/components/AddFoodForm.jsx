@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
+    title: "",
+    description: "",
     image: null,
   });
 
@@ -27,6 +28,8 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
     });
   };
 
+  const navigate = useNavigate();
+
   const handleImageChange = (e) => {
     setFormData({
       ...formData,
@@ -36,13 +39,13 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
     const formDataToSend = new FormData();
-    formDataToSend.append('title', formData.title);
-    formDataToSend.append('description', formData.description);
+    formDataToSend.append("title", formData.title);
+    formDataToSend.append("description", formData.description);
     if (formData.image) {
-      formDataToSend.append('image', formData.image);
+      formDataToSend.append("image", formData.image);
     }
 
     try {
@@ -53,46 +56,68 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
           formDataToSend,
           {
             headers: {
-              'Content-Type': 'multipart/form-data',
+              "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${token}`,
             },
           }
         );
         onUpdate(response.data); // Pass updated food item to parent component
-        toast.success('Food item updated successfully', {
-          position: 'top-center',
+        toast.success("Food item updated successfully", {
+          position: "top-center",
         });
       } else {
         // Add new food item
-        const response = await axios.post('http://localhost:4000/api/foods', formDataToSend, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.post(
+          "http://localhost:4000/api/foods",
+          formDataToSend,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         onAdd(response.data.food);
         toast.success(response.data.message, {
-          position: 'top-center',
+          position: "top-center",
         });
       }
 
+      // Redirect to dashboard after successful submission
+      navigate("/dashboard");
+
       // Clear form fields after successful submission
       setFormData({
-        title: '',
-        description: '',
+        title: "",
+        description: "",
         image: null,
       });
-
     } catch (error) {
-      toast.error(error.response.data.message);
-      console.error('Error adding/updating food item:', error);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        // If response exists and contains error message
+        toast.error(error.response.data.message);
+      } else {
+        // Default error handling
+        toast.error("An error occurred while processing your request.");
+      }
+      console.error("Error adding/updating food item:", error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md"
+    >
       <div className="mb-4">
-        <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="title"
+          className="block text-sm font-medium text-gray-700"
+        >
           Title:
         </label>
         <input
@@ -105,7 +130,10 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="description"
+          className="block text-sm font-medium text-gray-700"
+        >
           Description:
         </label>
         <textarea
@@ -118,7 +146,10 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
         ></textarea>
       </div>
       <div className="mb-4">
-        <label htmlFor="image" className="block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="image"
+          className="block text-sm font-medium text-gray-700"
+        >
           Image:
         </label>
         <input
@@ -135,7 +166,7 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
           type="submit"
           className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
-          {initialData ? 'Update Food Item' : 'Add Food Item'}
+          {initialData ? "Update Food Item" : "Add Food Item"}
         </button>
         {initialData && (
           <button
