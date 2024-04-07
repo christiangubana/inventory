@@ -33,10 +33,6 @@ const Dashboard = ({ isLoggedIn }) => {
     fetchFoods();
   }, [token, setFoods]);
 
-  // const handleAddFood = (food) => {
-  //   setFoods([...foods, food]);
-  // };
-
   const handleAddFood = async (newFood) => {
     try {
       // Code to add new food item to state or perform necessary actions
@@ -213,7 +209,6 @@ const Dashboard = ({ isLoggedIn }) => {
           ) : (
             <AddFoodForm onAdd={handleAddFood} />
           )}
-          {/* {!editingFood && <AddFoodForm onAdd={handleAddFood} />} */}
         </div>
       </div>
     </div>

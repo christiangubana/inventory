@@ -98,10 +98,8 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
         error.response.data &&
         error.response.data.message
       ) {
-        // If response exists and contains error message
         toast.error(error.response.data.message);
       } else {
-        // Default error handling
         toast.error("An error occurred while processing your request.");
       }
       console.error("Error adding/updating food item:", error);
