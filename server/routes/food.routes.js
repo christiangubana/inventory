@@ -8,5 +8,6 @@ router.get("/", foodController.getAllFood);
 router.post("/", foodController.addFood);
 router.put("/:id", foodController.updateFood);
 router.delete("/:id", foodController.deleteFood);
+router.get("/:itemId", foodController.getFoodById);
 
 module.exports = router;

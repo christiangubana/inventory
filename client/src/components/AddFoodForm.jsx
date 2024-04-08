@@ -1,32 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
-const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
+const AddFoodForm = ({ initialData, onUpdate, onCancelEdit }) => {
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    image: null,
+    title: initialData?.title || "",
+    description: initialData?.description || "",
+    image: initialData?.image || null,
   });
 
-  useEffect(() => {
-    if (initialData) {
-      setFormData({
-        title: initialData.title,
-        description: initialData.description,
-        image: initialData.image || null, // Initialize image from initial data
-      });
-    } else {
-      // Reset form fields when initialData is not provided (for adding new item)
-      setFormData({
-        title: "",
-        description: "",
-        image: null,
-      });
-    }
-  }, [initialData]);
+  const isUpdating = !!initialData; // Determine if we are updating an existing item
+  const navigate = useNavigate(); // Initialize navigate function from react-router-dom
 
   const handleChange = (e) => {
     setFormData({
@@ -34,8 +19,6 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
       [e.target.name]: e.target.value,
     });
   };
-
-  const navigate = useNavigate();
 
   const handleImageChange = (e) => {
     setFormData({
@@ -47,76 +30,52 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-
-    const formDataToSend = new FormData();
-    formDataToSend.append("title", formData.title);
-    formDataToSend.append("description", formData.description);
-    if (formData.image) {
-      formDataToSend.append("image", formData.image);
-    }
-
     try {
-      if (initialData) {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      if (isUpdating) {
         // Update existing food item
         const response = await axios.put(
           `http://localhost:4000/api/foods/${initialData._id}`,
-          formDataToSend,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          formData,
+          config
         );
-        onUpdate(response.data.food); // Use onUpdate to update the item
+        onUpdate(response.data.food);
         toast.success("Food item updated successfully", {
           position: "top-center",
         });
       } else {
         // Add new food item
-        const response = await axios.post(
-          "http://localhost:4000/api/foods",
-          formDataToSend,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        onAdd(response.data.food); // Use onAdd to add a new item
-        toast.success(response.data.message, {
+        await axios.post(`http://localhost:4000/api/foods`, formData, config);
+        toast.success("Food item added successfully", {
           position: "top-center",
         });
       }
-      // Redirect to dashboard after successful submission
+
+      // Redirect to dashboard after successful addition
       navigate("/dashboard");
+      
+      // Reset form data after successful submission
+      setFormData({
+        title: "",
+        description: "",
+        image: null,
+      });
     } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("An error occurred while processing your request.");
-      }
-      console.error("Error adding/updating food item:", error);
+      console.error("Error updating food item:", error);
+      toast.error(error.message || "Failed to update food item.");
     }
   };
 
-  const resetForm = () => {
-    setFormData({
-      title: "",
-      description: "",
-      image: null,
-    });
+  const handleCancel = () => {
+    onCancelEdit();
   };
 
-  const handleCancel = () => {
-    resetForm(); // Reset form fields
-    onCancelEdit(); // Trigger cancel action provided by parent component
-  };
   return (
     <form
       onSubmit={handleSubmit}

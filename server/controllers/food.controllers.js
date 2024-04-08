@@ -82,6 +82,19 @@ exports.deleteFood = async (req, res, next) => {
   }
 };
 
+exports.getFoodById = async (req, res, next) => {
+  try {
+    const { itemId } = req.params;
+    const food = await Food.findById(itemId);
+    if (!food) {
+      return res.status(404).json({ message: "Food item not found" });
+    }
+    res.json(food);
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.getAllFood = async (req, res, next) => {
   try {
     const foods = await Food.find();

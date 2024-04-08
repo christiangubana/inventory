@@ -6,7 +6,8 @@ import Navbar from "./components/Layout/NavBar";
 import Registration from "./components/Register";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
-import AddFoodForm from "./components/AddFoodForm"; // Import AddFoodForm
+import AddFoodForm from "./components/AddFoodForm";
+import EditFoodForm from "./components/EditFoodForm"; // Import EditFoodForm
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,8 +28,10 @@ function App() {
         <Routes>
           {isLoggedIn ? (
             <>
-              <Route path="/dashboard" element={<Dashboard isLoggedIn={isLoggedIn} />} />
-              <Route path="/add" element={<AddFoodForm isLoggedIn={isLoggedIn}/>} /> {/* Route for AddFoodForm */}
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/add" element={<AddFoodForm />} />
+              <Route path="/edit/:itemId" element={<EditFoodForm />} />
+              <Route path="/" element={<Navigate to="/dashboard" />} />
             </>
           ) : (
             <>
