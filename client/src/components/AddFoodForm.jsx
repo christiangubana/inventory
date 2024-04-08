@@ -61,7 +61,7 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
             },
           }
         );
-        onUpdate(response.data); // Pass updated food item to parent component
+        onUpdate(response.data.food); // Use onUpdate to update the item
         toast.success("Food item updated successfully", {
           position: "top-center",
         });
@@ -77,7 +77,7 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
             },
           }
         );
-        onAdd(response.data.food);
+        onAdd(response.data.food); // Use onAdd to add a new item
         toast.success(response.data.message, {
           position: "top-center",
         });
@@ -106,76 +106,77 @@ const AddFoodForm = ({ onAdd, initialData, onUpdate, onCancelEdit }) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md"
-    >
-      <div className="mb-4">
-        <label
-          htmlFor="title"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Title:
-        </label>
-        <input
-          type="text"
-          id="title"
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-      </div>
-      <div className="mb-4">
-        <label
-          htmlFor="description"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Description:
-        </label>
-        <textarea
-          id="description"
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          rows="3"
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        ></textarea>
-      </div>
-      <div className="mb-4">
-        <label
-          htmlFor="image"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Image:
-        </label>
-        <input
-          type="file"
-          id="image"
-          name="image"
-          accept="image/*"
-          onChange={handleImageChange}
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-      </div>
-      <div className="flex justify-end">
-        <button
-          type="submit"
-          className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          {initialData ? "Update Food Item" : "Add Food Item"}
-        </button>
-        {initialData && (
-          <button
-            type="button"
-            onClick={onCancelEdit}
-            className="ml-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-gray-700 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-lg bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      >
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="title"
           >
-            Cancel
+            Food title
+          </label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="Food item title"
+          />
+        </div>
+        <div className="mb-6">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="description"
+          >
+            Food Description
+          </label>
+          <input
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="Food description"
+          />
+        </div>
+        <div className="mb-6">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="image"
+          >
+            Food Image
+          </label>
+          <input
+            type="file"
+            id="image"
+            name="image"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div className="flex items-center justify-between">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            {initialData ? "Update Food Item" : "Add Food Item"}
           </button>
-        )}
-      </div>
-    </form>
+          {initialData && (
+            <button
+              type="submit"
+              onClick={onCancelEdit}
+              className="ml-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-gray-700 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+            >
+              Cancel
+            </button>
+          )}
+        </div>
+      </form>
   );
 };
 

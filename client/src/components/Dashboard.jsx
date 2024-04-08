@@ -175,13 +175,13 @@ const Dashboard = ({ isLoggedIn }) => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <button
-                              className="text-indigo-600 hover:text-indigo-900"
+                              className="text-white hover:text-orange-400 bg-blue-400 focus:outline-none"
                               onClick={() => handleEdit(food._id)}
                             >
                               <FontAwesomeIcon icon={faEdit} />
                             </button>
                             <button
-                              className="text-red-600 hover:text-red-900 ml-2"
+                              className="text-red-600 hover:text-red-900 ml-2 bg-blue-400 focus:outline-none"
                               onClick={() => handleDelete(food._id)}
                             >
                               <FontAwesomeIcon icon={faTrash} />
@@ -201,12 +201,12 @@ const Dashboard = ({ isLoggedIn }) => {
           )}
           {editingFood ? (
             <AddFoodForm
-              onAdd={editingFood}
-              onUpdate={handleUpdateFood}
+              initialData={editingFood} // Pass existing food data as initialData
+              onUpdate={handleUpdateFood} // Use onUpdate to handle update action
               onCancelEdit={handleCancelEdit}
             />
           ) : (
-            <AddFoodForm onAdd={handleAddFood} />
+            <AddFoodForm onAdd={handleAddFood} /> // Use onAdd to handle adding new food
           )}
         </div>
       </div>

@@ -31,6 +31,7 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
         formData
       );
       const token = response.data.data.token;
+      console.log(token)
       localStorage.setItem("token", token);
       setIsLoggedIn(true);
       setUserName(formData.username);
