@@ -108,9 +108,10 @@ const Dashboard = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                           <img
-                            src={food.image}
                             alt={food.title}
-                            className="h-12 w-12 rounded-full object-cover"
+                            // src={food.title} //Having issue rendering server-side-image
+                            src={`https://source.unsplash.com/150x150/?food,${food.title}`}
+                            className="w-16 h-10 object-cover rounded-full mx-auto"
                           />
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
