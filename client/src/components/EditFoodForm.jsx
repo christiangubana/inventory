@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 import AddFoodForm from "./AddFoodForm";
 
 const EditFoodForm = () => {
-  const { itemId } = useParams(); // Extract itemId from route parameters
-  const navigate = useNavigate(); // Use useNavigate hook for navigation
+  const { itemId } = useParams();
+  const navigate = useNavigate();
   const [foodData, setFoodData] = useState(null);
 
   useEffect(() => {
@@ -21,13 +21,13 @@ const EditFoodForm = () => {
             },
           }
         );
-        setFoodData(response.data); // Store fetched food item data in state
+        setFoodData(response.data);
       } catch (error) {
         console.error("Error fetching food item:", error);
         toast.error(
           error.response?.data?.message || "Failed to fetch food item"
         );
-        navigate("/dashboard"); // Redirect to dashboard on error
+        navigate("/dashboard");
       }
     };
 
@@ -50,7 +50,7 @@ const EditFoodForm = () => {
       toast.success("Food item updated successfully", {
         position: "top-center",
       });
-      navigate("/dashboard"); // Redirect to dashboard after successful update
+      navigate("/dashboard");
     } catch (error) {
       console.error("Error updating food item:", error);
       toast.error(
@@ -60,21 +60,19 @@ const EditFoodForm = () => {
   };
 
   const handleCancel = () => {
-    navigate("/dashboard"); // Redirect to dashboard on cancel
+    navigate("/dashboard");
   };
 
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">
-            Edit Food Item
-          </h1>
           {foodData && (
             <AddFoodForm
-              initialData={foodData} // Pass fetched food item data as initialData
+              initialData={foodData}
               onUpdate={handleUpdate}
               onCancelEdit={handleCancel}
+              mode="edit" // Pass the mode prop as "edit"
             />
           )}
         </div>
