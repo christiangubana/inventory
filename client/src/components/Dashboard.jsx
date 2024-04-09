@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -43,7 +41,7 @@ const Dashboard = () => {
         },
       });
       setFoods(foods.filter((food) => food._id !== foodId));
-      toast.success("Food item deleted successfully", {
+      toast.success("Food item removed successfully", {
         position: "top-center",
       });
     } catch (error) {
@@ -91,18 +89,18 @@ const Dashboard = () => {
                       <p className="text-gray-400 text-sm">
                         Created at {formatDate(food.createdAt)}
                       </p>
-                      <div>
+                      <div className="flex">
                         <button
-                          className="text-blue-500 hover:text-blue-700 mr-2 focus:outline-none"
+                          className="text-gray-500 hover:text-blue-700 mr-2 focus:outline-none bg-gray-100"
                           onClick={() => handleEdit(food._id)}
                         >
-                          <FontAwesomeIcon icon={faEdit} />
+                          Edit
                         </button>
                         <button
-                          className="text-red-500 hover:text-red-700 focus:outline-none"
+                          className="text-red-500 hover:text-red-700 focus:outline-none bg-gray-100"
                           onClick={() => handleDelete(food._id)}
                         >
-                          <FontAwesomeIcon icon={faTrash} />
+                          Remove
                         </button>
                       </div>
                     </div>
