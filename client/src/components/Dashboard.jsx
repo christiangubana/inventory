@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const token = localStorage.getItem("token");
@@ -11,9 +12,11 @@ const Dashboard = () => {
 
   const [foods, setFoods] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const fetchFoods = async () => {
     try {
+      setIsLoading(true);
       const response = await axios.get("http://localhost:4000/api/foods", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -23,6 +26,8 @@ const Dashboard = () => {
     } catch (error) {
       console.error("Error fetching foods:", error);
       toast.error(error.response.data.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -54,7 +59,7 @@ const Dashboard = () => {
 
   const handleEdit = (foodId) => {
     // Redirect to edit page
-    window.location.href = `http://localhost:5173/edit/${foodId}`;
+    navigate(`/edit/${foodId}`)
   };
 
   return (
@@ -94,43 +99,46 @@ const Dashboard = () => {
                     </td>
                   </tr>
                 ) : (
-                  foods.map((food) => (
-                    <tr key={food._id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {food._id}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm">
-                        <img
-                          src={food.image}
-                          alt={food.title}
-                          className="h-12 w-12 rounded-full object-cover"
-                        />
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {formatDate(food.createdAt)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {food.title}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {food.description}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <button
-                          className="text-white hover:text-orange-400 bg-blue-400 focus:outline-none"
-                          onClick={() => handleEdit(food._id)}
-                        >
-                          <FontAwesomeIcon icon={faEdit} />
-                        </button>
-                        <button
-                          className="text-red-600 hover:text-red-900 ml-2 bg-blue-400 focus:outline-none"
-                          onClick={() => handleDelete(food._id)}
-                        >
-                          <FontAwesomeIcon icon={faTrash} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
+                  foods.map((food) => {
+                    console.log(food.image)
+                    return (
+                      <tr key={food._id}>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {food._id}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                          <img
+                            src={food.image}
+                            alt={food.title}
+                            className="h-12 w-12 rounded-full object-cover"
+                          />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {formatDate(food.createdAt)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          {food.title}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {food.description}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <button
+                            className="text-white hover:text-orange-400 bg-blue-400 focus:outline-none"
+                            onClick={() => handleEdit(food._id)}
+                          >
+                            <FontAwesomeIcon icon={faEdit} />
+                          </button>
+                          <button
+                            className="text-red-600 hover:text-red-900 ml-2 bg-blue-400 focus:outline-none"
+                            onClick={() => handleDelete(food._id)}
+                          >
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })
                 )}
               </tbody>
             </table>

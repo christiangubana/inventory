@@ -58,11 +58,17 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
       return;
     }
 
+    // const formData = new FormData();
+    // formData.append("title", formData.title);
+    // formData.append("description", formData.description);
+    // formData.append("image", formData.image);
+
     const token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data", // Important for file upload
         },
       };
 
@@ -72,12 +78,14 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
           formData,
           config
         );
+        console.log('UPDATE RESPONSE ', response)
         onUpdate(response.data.food);
         toast.success("Food item updated successfully", {
           position: "top-center",
         });
       } else {
-        await axios.post(`http://localhost:4000/api/foods`, formData, config);
+       const response = await axios.post(`http://localhost:4000/api/foods`, formData, config);
+       console.log('ADDING RESPONSE ', response)
         toast.success("Food item added successfully", {
           position: "top-center",
         });

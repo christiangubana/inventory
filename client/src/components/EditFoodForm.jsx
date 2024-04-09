@@ -43,7 +43,7 @@ const EditFoodForm = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
+            "Content-Type": "application/json", // Specify Content-Type as JSON
           },
         }
       );
