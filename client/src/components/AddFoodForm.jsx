@@ -57,12 +57,7 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
     if (!validateForm()) {
       return;
     }
-
-    // const formData = new FormData();
-    // formData.append("title", formData.title);
-    // formData.append("description", formData.description);
-    // formData.append("image", formData.image);
-
+    
     const token = localStorage.getItem("token");
     try {
       const config = {
@@ -79,11 +74,8 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
           config
         );
         onUpdate(response.data.food);
-        toast.success("Food item updated successfully", {
-          position: "top-center",
-        });
       } else {
-       const response = await axios.post(`http://localhost:4000/api/foods`, formData, config);
+        await axios.post(`http://localhost:4000/api/foods`, formData, config);
         toast.success("Food item added successfully", {
           position: "top-center",
         });
