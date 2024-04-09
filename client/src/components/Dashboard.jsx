@@ -59,7 +59,7 @@ const Dashboard = () => {
 
   const handleEdit = (foodId) => {
     // Redirect to edit page
-    navigate(`/edit/${foodId}`)
+    navigate(`/edit/${foodId}`);
   };
 
   return (
@@ -68,40 +68,43 @@ const Dashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-6">Dashboard</h1>
           <div className="overflow-hidden border border-gray-200 rounded-lg">
-            <table className="min-w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Id
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Image
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Created At
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Name
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Description
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {isLoading ? (
+            {foods.length === 0 ? (
+              <p className="p-4 text-center text-gray-500">
+                There's no item to show. Start adding new items to the list.
+              </p>
+            ) : (
+              <table className="min-w-full">
+                <thead className="bg-gray-50">
                   <tr>
-                    <td colSpan="6" className="text-center py-4">
-                      Loading...
-                    </td>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Id
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Image
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Created At
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Name
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Description
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Action
+                    </th>
                   </tr>
-                ) : (
-                  foods.map((food) => {
-                    console.log(food.image)
-                    return (
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {isLoading ? (
+                    <tr>
+                      <td colSpan="6" className="text-center py-4">
+                        Loading...
+                      </td>
+                    </tr>
+                  ) : (
+                    foods.map((food) => (
                       <tr key={food._id}>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                           {food._id}
@@ -138,11 +141,11 @@ const Dashboard = () => {
                           </button>
                         </td>
                       </tr>
-                    );
-                  })
-                )}
-              </tbody>
-            </table>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
       </div>
