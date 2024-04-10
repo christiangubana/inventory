@@ -39,6 +39,7 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
       });
       navigate("/dashboard");
     } catch (error) {
+      console.log(`WHAT IS THE ERROR? ${error}`)
       console.error("Login failed:", error);
       if (
         error.response &&
@@ -47,7 +48,7 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
       ) {
         toast.error(error.response.data.message);
       } else {
-        toast.error("Failed to login. Please try again.");
+        toast.error(`Failed to login, ${error.message}, Please try again.`);
       }
     } finally {
       setIsLoading(false);
@@ -292,7 +293,7 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
                 </div>
               </div>
             </div>
-            <div className="flex -mx-3">
+            {/* <div className="flex -mx-3">
               <div className="w-full px-3 mb-5">
                 <label htmlFor="" className="text-xs font-normal px-1">
                   Email
@@ -311,7 +312,7 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="flex -mx-3">
               <div className="w-full px-3 mb-12">
                 <label htmlFor="" className="text-xs font-normal px-1">
