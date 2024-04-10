@@ -7,6 +7,10 @@ const FoodSchema = new Schema({
     type: String,
     required: true,
   },
+  quantity: {
+    type: String,
+    required: true,
+  },
   description: {
     type: String,
     required: true,

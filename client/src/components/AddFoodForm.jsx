@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
   const [formData, setFormData] = useState({
     title: initialData?.title || "",
+    quantity: initialData?.quantity || "",
     description: initialData?.description || "",
     image: initialData?.image || null,
   });
@@ -34,6 +35,10 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
 
     if (!formData.title.trim()) {
       newErrors.title = "Title is required";
+      valid = false;
+    }
+    if (!formData.title.trim()) {
+      newErrors.quantity = "Quantity is required";
       valid = false;
     }
 
@@ -84,6 +89,7 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
       navigate("/dashboard");
       setFormData({
         title: "",
+        quantity: "",
         description: "",
         image: null,
       });
@@ -126,6 +132,28 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
           />
           {errors.title && (
             <p className="text-red-500 text-xs italic">{errors.title}</p>
+          )}
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="title"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Food Quantity
+          </label>
+          <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            value={formData.quantity}
+            onChange={handleChange}
+            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+              errors.quantity ? "border-red-500" : ""
+            }`}
+            placeholder="Food item quantity"
+          />
+          {errors.quantity && (
+            <p className="text-red-500 text-xs italic">{errors.quantity}</p>
           )}
         </div>
         <div className="mb-4">
