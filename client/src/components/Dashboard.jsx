@@ -2,9 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import Chart from 'chart.js/auto';
+import Chart from "chart.js/auto";
 import useAuth from "../hooks/useAuth";
-
 
 const Dashboard = () => {
   const [foods, setFoods] = useState([]);
@@ -21,7 +20,7 @@ const Dashboard = () => {
         if (!token) {
           throw new Error("Token not found in local storage");
         }
-    
+
         const response = await axios.get("http://localhost:4000/api/foods", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -31,9 +30,9 @@ const Dashboard = () => {
       } catch (error) {
         console.error("Error fetching foods:", error);
         toast.error("Failed to fetch foods");
-      } 
+      }
     };
-    
+
     fetchFoods();
   }, []);
 
@@ -74,9 +73,9 @@ const Dashboard = () => {
         labels,
         datasets: [
           {
-            label: 'Inventory Levels',
+            label: "Inventory Levels",
             data,
-            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            backgroundColor: "rgba(54, 162, 235, 0.6)",
           },
         ],
       };
@@ -85,11 +84,11 @@ const Dashboard = () => {
     const options = {
       scales: {
         y: {
-          type: 'linear',
+          type: "linear",
           beginAtZero: true,
           title: {
             display: true,
-            text: 'Quantity',
+            text: "Quantity",
           },
         },
       },
@@ -103,9 +102,9 @@ const Dashboard = () => {
 
       // Render new chart
       newChartInstance = new Chart(chartRef.current, {
-        type: 'bar',
+        type: "bar",
         data: prepareChartData(),
-        options: options
+        options: options,
       });
 
       // Update chartRef with the new chart instance
@@ -125,13 +124,6 @@ const Dashboard = () => {
       <div className="py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-6">Dashboard</h1>
-          
-          {/* Render Chart */}
-          <div className="mb-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">Inventory Levels</h2>
-            <canvas ref={chartRef}></canvas>
-          </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {foods.length === 0 ? (
               <p className="text-center text-gray-500">
@@ -139,46 +131,68 @@ const Dashboard = () => {
               </p>
             ) : (
               foods.map((food) => (
-                <div key={food._id} className="bg-white overflow-hidden shadow rounded-lg">
-                  <div className="p-4">
-                    <p className="text-lg font-semibold text-gray-900 mb-2">{food.title}</p>
-                    <p className="text-gray-500 mb-4">{food.description}</p>
-                    <img
-                      alt={food.title}
-                      src={`https://source.unsplash.com/300x200/?food,${food.title}`}
-                      className="w-full h-48 object-cover mb-4"
-                    />
-                    <div className="flex justify-between items-center mb-2">
-                      <p className="text-gray-400 text-sm">Created at {formatDate(food.createdAt)}</p>
-                      <p className={`text-sm font-medium ${food.quantity < 10 ? 'text-red-500 font-bold' : 'text-gray-500'}`}>
+                <div
+                  key={food._id}
+                  className="rounded-lg overflow-hidden shadow-md"
+                >
+                  <img
+                    className="w-full h-48 object-cover"
+                    alt={food.title}
+                    src={`https://source.unsplash.com/300x200/?food,${food.title}`}
+                  />
+                  <div className="px-4 py-4">
+                    <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                      {food.title}
+                    </h2>
+                    <p className="text-gray-700">{food.description}</p>
+                    <div className="flex justify-between items-center mt-4">
+                      <p className={`text-sm font-medium ${
+                        food.quantity < 10 ? 'text-red-500 font-bold' : 'text-green-500'
+                      }`}>
                         Inventory: {food.quantity} units
-                        <span className={`ml-2 inline-block ${food.quantity < 10 ? 'text-red-500' : 'text-green-500'}`}>
+                        <span className="ml-2">
                           {food.quantity < 10 ? 'Low Stock' : 'In Stock'}
                         </span>
                       </p>
+                      <div className="flex">
+                        <button
+                          onClick={() => handleEdit(food._id)}
+                          className="hover:text-blue-700 focus:outline-none bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDelete(food._id)}
+                          className="text-red-500 hover:text-red-700 focus:outline-none bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2"
+
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <button
-                        className="text-gray-500 hover:text-blue-700 mr-2 focus:outline-none bg-gray-100"
-                        onClick={() => handleEdit(food._id)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="text-red-500 hover:text-red-700 focus:outline-none bg-gray-100"
-                        onClick={() => handleDelete(food._id)}
-                      >
-                        Remove
-                      </button>
-                    </div>
+                    <p className="text-sm text-gray-500 mt-2">
+                      Created at {formatDate(food.createdAt)}
+                    </p>
                   </div>
                 </div>
               ))
             )}
           </div>
+
+          {/* Chart */}
+          <div className="mt-8">
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">
+              Inventory Levels
+            </h2>
+            <canvas
+              ref={chartRef}
+              style={{ maxWidth: "100%", height: "auto" }}
+            ></canvas>
+          </div>
+
           <div className="flex justify-end mt-6">
             <button
-              onClick={() => navigate('/add')}
+              onClick={() => navigate("/add")}
               className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none"
             >
               Add New Item
