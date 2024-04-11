@@ -1,38 +1,41 @@
-import React, { useState, useEffect } from "react";
-import useAuth from "../hooks/useAuth";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Chart from 'chart.js/auto';
+import useAuth from "../hooks/useAuth";
+
 
 const Dashboard = () => {
+  const [foods, setFoods] = useState([]);
+  const chartRef = useRef(null);
+  const navigate = useNavigate();
+
   const token = localStorage.getItem("token");
   useAuth(token);
 
-  const [foods, setFoods] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
-
-  const fetchFoods = async () => {
-    try {
-      setIsLoading(true);
-      const response = await axios.get("http://localhost:4000/api/foods", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(response)
-      setFoods(response.data);
-    } catch (error) {
-      console.error("Error fetching foods:", error);
-      toast.error(error.response.data.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchFoods = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Token not found in local storage");
+        }
+    
+        const response = await axios.get("http://localhost:4000/api/foods", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setFoods(response.data);
+      } catch (error) {
+        console.error("Error fetching foods:", error);
+        toast.error("Failed to fetch foods");
+      } 
+    };
+    
     fetchFoods();
-  }, [token]);
+  }, []);
 
   const handleDelete = async (foodId) => {
     try {
@@ -60,11 +63,75 @@ const Dashboard = () => {
     return date.toLocaleString();
   };
 
+  useEffect(() => {
+    let newChartInstance = null;
+
+    const prepareChartData = () => {
+      const labels = foods.map((food) => food.title);
+      const data = foods.map((food) => food.quantity);
+
+      return {
+        labels,
+        datasets: [
+          {
+            label: 'Inventory Levels',
+            data,
+            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+          },
+        ],
+      };
+    };
+
+    const options = {
+      scales: {
+        y: {
+          type: 'linear',
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Quantity',
+          },
+        },
+      },
+    };
+
+    if (chartRef.current) {
+      // Destroy previous chart instance
+      if (chartRef.current.chartInstance) {
+        chartRef.current.chartInstance.destroy();
+      }
+
+      // Render new chart
+      newChartInstance = new Chart(chartRef.current, {
+        type: 'bar',
+        data: prepareChartData(),
+        options: options
+      });
+
+      // Update chartRef with the new chart instance
+      chartRef.current.chartInstance = newChartInstance;
+    }
+
+    return () => {
+      // Cleanup: Destroy chart instance on component unmount
+      if (newChartInstance) {
+        newChartInstance.destroy();
+      }
+    };
+  }, [foods]);
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-6">Dashboard</h1>
+          
+          {/* Render Chart */}
+          <div className="mb-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">Inventory Levels</h2>
+            <canvas ref={chartRef}></canvas>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {foods.length === 0 ? (
               <p className="text-center text-gray-500">
