@@ -1,35 +1,21 @@
 # Use Node.js LTS version as base image
 FROM node:lts-alpine as build
 
-# Set working directory inside the container
+# Set the working directory in the container
 WORKDIR /app/client
 
-# Copy package.json and package-lock.json
+# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-# Install dependencies
+# Install app dependencies
+RUN npm config set legacy-peer-deps true
 RUN npm install
 
-# Copy the rest of the application code
+# Copy the rest of your application code to the working directory
 COPY . .
 
-# Build the React app for production
-RUN npm run build
+# Expose a port to communicate with the React app
+EXPOSE 5173
 
-# Production environment
-FROM node:lts-alpine
-
-# Set working directory to serve the app
-WORKDIR /app/client
-
-# Install serve to run the app
-RUN npm install -g serve
-
-# Copy the build output from the previous stage
-COPY --from=build /app/client/build ./build
-
-# Expose port
-EXPOSE 3000
-
-# Command to run the application
-CMD ["serve", "-s", "build"]
+# Start your React app
+CMD ["npm", "run", "dev"]
