@@ -15,7 +15,7 @@ services:
     ports:
       - "4000:4000"
     environment:
-      DB_URI: mongodb://localhost:27017/kota_db
+      MONGODB_URI: mongodb://localhost:27017/kota_db
     depends_on:
       - mongo
 

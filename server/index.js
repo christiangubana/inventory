@@ -3,7 +3,6 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const dbConfig = require("./config/db.config");
-const path = require('path');
 
 const auth = require("./middlewares/auth.js");
 const errors = require("./middlewares/errors.js");
@@ -12,14 +11,10 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
+const uri = process.env.MONGODB_URI || dbConfig;
+
 mongoose.Promise = global.Promise;
-// mongoose
-//   .connect(dbConfig.db, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-mongoose
-  .connect(process.env.DB_URI,{
+mongoose.connect(uri,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
 },6000000)
