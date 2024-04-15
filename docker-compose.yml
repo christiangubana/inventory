@@ -4,14 +4,16 @@ services:
   client:
     build:
       context: ./client
+    image: frontent
     ports:
-      - "5173:5173"
+      - "3000:3000"
     depends_on:
       - server
 
   server:
     build:
       context: ./server
+    image: backend
     ports:
       - "4000:4000"
     environment:

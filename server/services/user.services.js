@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const auth = require("../middlewares/auth.js");
 
 async function login({ username, password }, callback) {
-  const user = await User.findOne({ username }, 6000000);
+  const user = await User.findOne({ username });
 
   if (user != null) {
     if (bcrypt.compareSync(password, user.password)) {
