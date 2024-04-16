@@ -31,7 +31,7 @@ const Registration = () => {
       toast.success(response.data.message, {
         position: "top-center",
       });
-      navigate("/login"); // Redirect here before going straing to the Dashboard
+      navigate("/login"); // Redirect here before going straigh to the Dashboard
     } catch (error) {
       console.error("Regitration failed:", error); // Handle error
       if (
