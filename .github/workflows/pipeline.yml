@@ -1,0 +1,36 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main  # Set this to your main branch name
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository to the runner
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.12.0'  
+
+      # Install dependencies and build client
+      - name: Install Dependencies and Build Client
+        run: |
+          cd client
+          npm config set legacy-peer-deps true
+          npm install
+          npm run build
+
+      # Install dependencies and test server
+      - name: Install Dependencies and Test Server
+        run: |
+          cd server
+          npm install -g nodemon
+          npm install
