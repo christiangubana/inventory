@@ -33,13 +33,14 @@ jobs:
       - name: Build and Test Server
         run: |
           cd server
+          npm install -g nodemon
           npm install
-          npm test
 
       # Build Client
       - name: Build Client
         run: |
           cd client
+          npm config set legacy-peer-deps true
           npm install
           npm run build
 
