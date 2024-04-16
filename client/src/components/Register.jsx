@@ -28,8 +28,10 @@ const Registration = () => {
         "http://localhost:4000/api/register",
         formData
       );
-      navigate("/dashboard");
-      console.log(response.data); // Handle success response
+      toast.success(response.data.message, {
+        position: "top-center",
+      });
+      navigate("/login"); // Redirect here before going straing to the Dashboard
     } catch (error) {
       console.error("Regitration failed:", error); // Handle error
       if (
