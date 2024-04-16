@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import React, { Suspense, useState, useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Layout/NavBar";
-import Registration from "./components/Register";
-import Login from "./components/Login";
-import Dashboard from "./components/Dashboard";
-import AddFoodForm from "./components/AddFoodForm";
-import EditFoodForm from "./components/EditFoodForm"; // Import EditFoodForm
+import Loading from "./components/Screens/Global/Loading";
+import useAuth from "./hooks/useAuth"
+
+const Registration = React.lazy(() => import("./components/Register"));
+const Login = React.lazy(() => import("./components/Login"));
+const Dashboard = React.lazy(() => import("./components/Dashboard"));
+const AddFoodForm = React.lazy(() => import("./components/AddFoodForm"));
+const EditFoodForm = React.lazy(() => import("./components/EditFoodForm"));
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState(""); // State to store user's name
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -20,29 +23,34 @@ function App() {
     }
   }, []);
 
+  // Apply useAuth hook to protect dashboard and related routes
+  useAuth(isLoggedIn);
+
   return (
-    <Router>
-      <>
-        <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userName={userName} />
-        <ToastContainer />
+    <>
+      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userName={userName} />
+      <ToastContainer />
+      <Suspense fallback={<Loading />}>
         <Routes>
+          <Route path="/" element={<Navigate to="/dashboard" />} />
+          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserName={setUserName} />} />
+          <Route path="/register" element={<Registration setIsLoggedIn={setIsLoggedIn} />} />
+          {/* Protected Routes */}
           {isLoggedIn ? (
             <>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/add" element={<AddFoodForm />} />
               <Route path="/edit/:itemId" element={<EditFoodForm />} />
-              <Route path="/" element={<Navigate to="/dashboard" />} />
             </>
           ) : (
             <>
-              <Route path="/" element={<Navigate to="/login" />} />
-              <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserName={setUserName} />} />
-              <Route path="/register" element={<Registration setIsLoggedIn={setIsLoggedIn} />} />
+              {/* Redirect to login if not logged in */}
+              <Route path="*" element={<Navigate to="/login" />} />
             </>
           )}
         </Routes>
-      </>
-    </Router>
+      </Suspense>
+    </>
   );
 }
 
