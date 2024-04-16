@@ -1,7 +1,7 @@
 import React, { Suspense, useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { BrowserRouter as Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Layout/NavBar";
 import Loading from "./components/Screens/Global/Loading";
 import useAuth from "./hooks/useAuth"
