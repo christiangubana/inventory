@@ -34,3 +34,15 @@ jobs:
           cd server
           npm install -g nodemon
           npm install
+
+       # Build a Docker image for the client application
+      - name: Build Client Docker Image
+        run: |
+          cd client
+          docker build -t rakeshpotnuru/productivity-app:client-${{github.run_number}} .
+
+      # Build a Docker image for the server application
+      - name: Build Server Docker Image
+        run: |
+          cd server
+          docker build -t rakeshpotnuru/productivity-app:server-${{github.run_number}} .
