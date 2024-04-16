@@ -3,7 +3,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Chart from "chart.js/auto";
-import useAuth from "../hooks/useAuth";
 
 const Dashboard = () => {
   const [foods, setFoods] = useState([]);
@@ -11,7 +10,6 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
-  useAuth(token);
 
   useEffect(() => {
     const fetchFoods = async () => {
