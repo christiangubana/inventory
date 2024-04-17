@@ -27,8 +27,8 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, userName }) => {
                 {isLoggedIn ? (
                   <>
                     <Link to="/dashboard" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</Link>
-                    <button onClick={handleLogout} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Logout</button>
-                    <button onClick={handleAddItem} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Add Item</button> {/* Add Item button */}
+                    <button onClick={handleLogout} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium bg-inherit">Logout</button>
+                    <button onClick={handleAddItem} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium bg-inherit">Add Item</button> {/* Add Item button */}
                   </>
                 ) : (
                   <>
