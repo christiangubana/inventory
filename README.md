@@ -24,6 +24,15 @@ client/
 ...
 ```
 
+.
+└── inventory-management/
+    ├── .github/
+    │   └── workflows/
+    │       └── pipeline.yml
+    ├── client/
+    ├── server/
+    └── docker-compose.yml
+
 # Usage (run full-stack app on your machine)
 
 ## Prerequisites
@@ -96,6 +105,16 @@ react-dom: "^18.2.0 | jsonwebtoken": "^9.0.2
 react-router-dom: ^6.22.3 | mongoose": "^8.2.2
 react-toastify": ^10.0.52 | mongoose-unique-validator": "^5.0.0
 react-dom: "^18.2.0 | multer": "^1.4.5-lts.1
+
+## Tool used
+
+Language: 
+ └── client side: JavaScription, React.js TailwindCSS
+ └── server side: Node.JS, Express.JS, MongoDB, Multer(for image upload)
+
+IDE: Visual Studio
+
+OS: Windows 11 Pro 64-bit
 
 
 ### License
