@@ -35,7 +35,7 @@ client/
 ```
 
 
-# Usage (run full-stack app on your machine)
+## Usage (run full-stack app on your machine)
 
 ## Prerequisites
 - [MongoDB](https://gist.github.com/nrollr/9f523ae17ecdbb50311980503409aeb3)
