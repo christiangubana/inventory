@@ -15,7 +15,7 @@ const uri = process.env.MONGODB_URI || dbConfig;
 
 mongoose.Promise = global.Promise;
 mongoose.connect(uri,{
-// mongoose.connect('mongodb://mongo:27017',{
+// mongoose.connect('mongodb://mongo:27017',{  /* <= Change to this to point to Docker image connection*/
     useNewUrlParser: true,
     useUnifiedTopology: true,
 },6000000)
