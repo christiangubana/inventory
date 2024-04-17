@@ -2,6 +2,8 @@
 🌐 INVENTORY MANAGEMENT - WEB APPLICATION
 </h1>
 
+![KOTA!](inventory-management/inventory-app.png)
+
 ## Summary
 A full stack application, tailored to facilitate a chef(working in a Kota shop) in managing food items by providing features such as adding, updating, and deleting them. The app uses Authentication with JSON Web Tokens (JWTs) user encryption.
 
@@ -35,7 +37,7 @@ client/
 ```
 
 
-# Usage (run full-stack app on your machine)
+## Usage (run full-stack app on your machine)
 
 ## Prerequisites
 - [MongoDB](https://gist.github.com/nrollr/9f523ae17ecdbb50311980503409aeb3)
