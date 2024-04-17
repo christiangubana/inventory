@@ -57,6 +57,33 @@ $ npm i    // npm install packages
 $ npm start or nodemon main // run it locally
 ```
 
+## How to run the app on Docker Container
+
+First you need to have Docker Desktop intalled on your local machine & make sure you have the right DB connection & the server 
+You will notice inside the server folder, check inside inside index.js file you'll see how I switch connections:
+
+### See example below
+```terminal
+// in the root level
+$ cd server
+$ find the 'index.js' file
+mongoose.connect(uri,{
+// mongoose.connect('mongodb://mongo:27017',{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+},6000000)
+}
+
+mongodb://mongo:27017 = is my mongo image, refer this from 'docker-compose.yml' file
+uri = is the value of my MONGODB_URI variable stored inside .env file
+...
+```
+
+```terminal
+$ cd inventory-management // go to the main folder
+$ docker-compose up --build    // to build/start both the client & the server images
+
+
 # Dependencies(tech-stacks)
 Client-side | Server-side
 --- | ---
