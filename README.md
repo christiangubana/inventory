@@ -21,10 +21,10 @@ server/
    .env (to create .env, check [prepare your secret session])
 client/
    package.json
-...
-```
 
-```└── inventory-management/
+   -------------------
+   
+   └── inventory-management/
     ├── .github/
     │   └── workflows/
     │       └── pipeline.yml
@@ -32,6 +32,7 @@ client/
     ├── server/
     └── docker-compose.yml
 ...
+```
 
 
 # Usage (run full-stack app on your machine)
