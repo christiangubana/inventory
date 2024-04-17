@@ -24,14 +24,15 @@ client/
 ...
 ```
 
-.
-└── inventory-management/
+```└── inventory-management/
     ├── .github/
     │   └── workflows/
     │       └── pipeline.yml
     ├── client/
     ├── server/
     └── docker-compose.yml
+...
+
 
 # Usage (run full-stack app on your machine)
 
@@ -44,9 +45,9 @@ notice, you need client and server runs concurrently in different terminal sessi
 
 ## Client-side usage(PORT: 3000)
 ```terminal
-$ cd client          // go to client folder
-$ npm i    // npm install packages
-$ npm run dev        // run it locally
+$ cd client // go to client folder
+$ npm i // npm install packages
+$ npm run dev // run it locally
 ```
 
 ## Server-side usage(PORT: 4000)
@@ -62,7 +63,7 @@ This project required a mongoDB connection setup. Setup the connection based on 
 ```terminal
 // in the root level
 $ cd server
-$ npm i    // npm install packages
+$ npm i // npm install packages
 $ npm start or nodemon main // run it locally
 ```
 
