@@ -14,8 +14,8 @@ dotenv.config();
 const uri = process.env.MONGODB_URI || dbConfig;
 
 mongoose.Promise = global.Promise;
-// mongoose.connect(uri,{
-mongoose.connect('mongodb://mongo:27017',{
+mongoose.connect(uri,{
+// mongoose.connect('mongodb://mongo:27017',{
     useNewUrlParser: true,
     useUnifiedTopology: true,
 },6000000)
