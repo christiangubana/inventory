@@ -21,8 +21,19 @@ server/
    .env (to create .env, check [prepare your secret session])
 client/
    package.json
+
+   -------------------
+   
+   └── inventory-management/
+    ├── .github/
+    │   └── workflows/
+    │       └── pipeline.yml
+    ├── client/
+    ├── server/
+    └── docker-compose.yml
 ...
 ```
+
 
 # Usage (run full-stack app on your machine)
 
@@ -35,9 +46,9 @@ notice, you need client and server runs concurrently in different terminal sessi
 
 ## Client-side usage(PORT: 3000)
 ```terminal
-$ cd client          // go to client folder
-$ npm i    // npm install packages
-$ npm run dev        // run it locally
+$ cd client // go to client folder
+$ npm i // npm install packages
+$ npm run dev // run it locally
 ```
 
 ## Server-side usage(PORT: 4000)
@@ -53,9 +64,36 @@ This project required a mongoDB connection setup. Setup the connection based on 
 ```terminal
 // in the root level
 $ cd server
-$ npm i    // npm install packages
+$ npm i // npm install packages
 $ npm start or nodemon main // run it locally
 ```
+
+## How to run the app on Docker Container
+
+First you need to have Docker Desktop intalled on your local machine & make sure you have the right DB connection & the server 
+You will notice inside the server folder, check inside inside index.js file you'll see how I switch connections:
+
+### See example below
+```terminal
+// in the root level
+$ cd server
+$ find the 'index.js' file
+mongoose.connect(uri,{
+// mongoose.connect('mongodb://mongo:27017',{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+},6000000)
+}
+
+mongodb://mongo:27017 = is my mongo image, refer this from 'docker-compose.yml' file
+uri = is the value of my MONGODB_URI variable stored inside .env file
+...
+```
+
+```terminal
+$ cd inventory-management // go to the main folder
+$ docker-compose up --build    // to build/start both the client & the server images
+
 
 # Dependencies(tech-stacks)
 Client-side | Server-side
@@ -69,6 +107,16 @@ react-dom: "^18.2.0 | jsonwebtoken": "^9.0.2
 react-router-dom: ^6.22.3 | mongoose": "^8.2.2
 react-toastify": ^10.0.52 | mongoose-unique-validator": "^5.0.0
 react-dom: "^18.2.0 | multer": "^1.4.5-lts.1
+
+## Tool used
+
+Language: 
+ └── client side: JavaScription, React.js TailwindCSS
+ └── server side: Node.JS, Express.JS, MongoDB, Multer(for image upload)
+
+IDE: Visual Studio
+
+OS: Windows 11 Pro 64-bit
 
 
 ### License

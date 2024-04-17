@@ -24,7 +24,7 @@ function App() {
   }, []);
 
   // Apply useAuth hook to protect dashboard and related routes
-  useAuth(isLoggedIn);
+  // useAuth(isLoggedIn);
 
   return (
     <>
