@@ -1,6 +1,6 @@
-<h1 align="center">
-🌐 INVENTORY MANAGEMENT - WEB APPLICATION
-</h1>
+<h3 align="center">
+🌐 INVENTORY - WEB APPLICATION
+</h3>
 
 ![KOTA!](https://github.com/christiangubana/inventory-management/blob/main/inventory-app.png)
 
