@@ -53,7 +53,7 @@ $ npm i // npm install packages
 $ npm run dev // run it locally
 ```
 
-## Server-side usage(PORT: 4000)
+## Server-side usage(PORT: 8080)
 
 ### Prepare the connection with MongoDB
 

@@ -15,7 +15,7 @@ services:
       context: ./server
     image: backend
     ports:
-      - "4000:4000"
+      - "8080:8080"
     environment:
       MONGODB_URI: mongodb://localhost:27017/kota_db
     depends_on:
