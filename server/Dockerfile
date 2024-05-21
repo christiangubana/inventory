@@ -1,15 +1,14 @@
 # Use Node.js LTS version as base image
-FROM node:lts-alpine
+FROM node:lts
 
 # Set working directory inside the container
-WORKDIR /app/server
+WORKDIR /app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install -g nodemon
-RUN npm install - mongodb-memory-server
 RUN npm install
 
 # Copy the rest of the application code
