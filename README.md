@@ -5,9 +5,31 @@
 ![KOTA!](https://github.com/christiangubana/inventory-management/blob/main/inventory-app.png)
 
 ## Summary
-# MERN Inventory Application
 
 This is a MERN (MongoDB, Express, React, Node.js) web application for managing inventory. The application includes authentication, CRUD operations for managing users and inventory items, and more.
+
+This `README.md` file provides a comprehensive guide for setting up and running your MERN web application both locally and with Docker, including necessary prerequisites, environment variables, and instructions for running the application.
+
+## Project Structure
+
+```plaintext
+inventory/
+├── .github/
+│   └── workflows/
+│       └── pipeline.yml
+├── client/
+│   ├── public/
+│   └── src/
+├── server/
+│   ├── controllers/
+│   ├── database/
+│   │   └── connect.js
+│   ├── middlewares/
+│   ├── models/
+│   ├── routes/
+│   └── index.js
+└── docker-compose.yml
+```
 
 ## Table of Contents
 
@@ -47,7 +69,7 @@ This is a MERN (MongoDB, Express, React, Node.js) web application for managing i
 
     ```sh
     git clone https://github.com/christiangubana/inventory.git
-    cd mern-inventory
+    cd inventory
     ```
 
 2. Install dependencies for both the client and server:
@@ -80,6 +102,7 @@ This is a MERN (MongoDB, Express, React, Node.js) web application for managing i
 2. Build and start the Docker containers:
 
     ```sh
+    cd inventory
     docker-compose up --build
     ```
 
@@ -122,27 +145,4 @@ The application requires the following environment variables:
 
 2. Open your browser and navigate to `http://localhost:3000`.
 
-## Project Structure
-
-```plaintext
-inventory/
-├── .github/
-│   └── workflows/
-│       └── pipeline.yml
-├── client/
-│   ├── public/
-│   └── src/
-├── server/
-│   ├── controllers/
-│   ├── database/
-│   │   └── connect.js
-│   ├── middlewares/
-│   ├── models/
-│   ├── routes/
-│   └── index.js
-└── docker-compose.yml
-```
-
-
-This `README.md` file provides a comprehensive guide for setting up and running your MERN web application both locally and with Docker, including necessary prerequisites, environment variables, and instructions for running the application.
 
