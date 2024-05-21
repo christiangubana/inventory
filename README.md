@@ -96,7 +96,7 @@ inventory/
 
     ```sh
     git clone https://github.com/christiangubana/inventory.git
-    cd mern-inventory
+    cd inventory
     ```
 
 2. Build and start the Docker containers:
@@ -140,9 +140,11 @@ The application requires the following environment variables:
 1. Build and start the Docker containers:
 
     ```sh
+    cd inventory
     docker-compose up --build
     ```
 
-2. Open your browser and navigate to `http://localhost:3000`.
+![DOCKER!](https://github.com/christiangubana/inventory-management/blob/main/docker-running-containers.png)
 
+2. Open your browser and navigate to `http://localhost:3000`.
 
