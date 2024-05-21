@@ -31,5 +31,4 @@ $ git clone https://github.com/christiangubana/inventory.git
 - [Node](https://nodejs.org/en/download/) ^20.0.0
 - [npm](https://nodejs.org/en/download/package-manager/)
 
-notice, you need client and server runs concurrently in different terminal session, in order to make them talk to each other
-
+```notice, you need client and server runs concurrently in different terminal session, in order to make them talk to each other```
