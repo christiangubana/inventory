@@ -95,7 +95,7 @@ inventory/
 1. Clone the repository:
 
     ```sh
-    git clone https://github.com/your-username/mern-inventory.git
+    git clone https://github.com/christiangubana/inventory.git
     cd mern-inventory
     ```
 
