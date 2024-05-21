@@ -5,7 +5,7 @@ const Food = require("./models/food.model");
 const bcrypt = require("bcryptjs");
 
 const seedData = async () => {
-  const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/testingDb";
+  const uri = process.env.MONGODB_URI || "mongodb://mongo:27017/testingDb";
   await mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

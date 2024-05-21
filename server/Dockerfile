@@ -1,8 +1,8 @@
 # Use Node.js LTS version as base image
-FROM node:lts
+FROM node:lts-alpine
 
 # Set working directory inside the container
-WORKDIR /app
+WORKDIR /app/server
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
@@ -13,6 +13,9 @@ RUN npm install
 
 # Copy the rest of the application code
 COPY . .
+
+# Copy seed.js for seeding the database
+COPY seed.js ./
 
 # Expose port
 EXPOSE 8080
