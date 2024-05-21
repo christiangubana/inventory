@@ -199,7 +199,7 @@ const seedData = async () => {
     },
     {
       title: "Banana",
-      quantity: "20",
+      quantity: "6",
       description: "Fresh bananas",
       image: "http://example.com/banana.jpg",
     },
