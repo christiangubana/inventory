@@ -46,7 +46,7 @@ This is a MERN (MongoDB, Express, React, Node.js) web application for managing i
 1. Clone the repository:
 
     ```sh
-    git clone https://github.com/your-username/mern-inventory.git
+    git clone https://github.com/christiangubana/inventory.git
     cd mern-inventory
     ```
 
@@ -141,6 +141,7 @@ inventory/
 │   ├── routes/
 │   └── index.js
 └── docker-compose.yml
+```
 
 
 This `README.md` file provides a comprehensive guide for setting up and running your MERN web application both locally and with Docker, including necessary prerequisites, environment variables, and instructions for running the application.
