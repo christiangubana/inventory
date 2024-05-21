@@ -9,6 +9,7 @@ COPY package*.json ./
 
 # Install dependencies
 RUN npm install -g nodemon
+RUN npm install - mongodb-memory-server
 RUN npm install
 
 # Copy the rest of the application code

@@ -5,12 +5,13 @@ const connect = async () => {
   const mongoServer = await MongoMemoryServer.create();
   const mongoURL = mongoServer.getUri();
 
-  mongoose.connect(mongoURL, {
+  const uri = process.env.MONGODB_URI || mongoURL
+  mongoose.connect(uri, {
     // useNewUrlParser: true,
     // useUnifiedTopology: true,
     dbName: "testingDb",
   });
-  console.log(`MongoDB successfully connected to ${mongoURL}`);
+  console.log(`MongoDB successfully connected to ${uri}`);
 };
 
 module.exports = connect;
