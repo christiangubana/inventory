@@ -20,7 +20,7 @@ services:
       MONGODB_URI: mongodb://mongo:27017
     depends_on:
       - mongo
-    command: sh -c "npm start && node seed.js"
+    # command: sh -c "npm start && node seed.js"
 
   mongo:
     image: mongo

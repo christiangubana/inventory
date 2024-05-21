@@ -163,59 +163,34 @@ To include initial test data (e.g., a test user and products), follow these inst
 1. Create a file named `seed.js` in the `server` directory with the following content:
 
     ```javascript
-   // seed.js
-const mongoose = require("mongoose");
-const User = require("./models/user.model");
-const Food = require("./models/food.model");
-const bcrypt = require("bcryptjs");
+    const mongoose = require("mongoose");
+    const User = require("./models/user.model");
+    const Food = require("./models/food.model");
 
-const seedData = async () => {
-  const uri = process.env.MONGODB_URI || "mongodb://mongo:27017/testingDb";
-  await mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+    const seedData = async () => {
+      const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/testingDb";
+      await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, dbName: "testingDb" });
 
-  // Clear existing data
-  await User.deleteMany({});
-  await Food.deleteMany({});
+      // Clear existing data
+      await User.deleteMany({});
+      await Food.deleteMany({});
 
-  // Create a test user
-  const salt = bcrypt.genSaltSync(10);
-  const testUser = new User({
-    username: "testuser",
-    <!-- email: "testuser@example.com", // email not required when loging in -->
-    password: bcrypt.hashSync("password", salt),
-  });
-  await testUser.save();
+      // Create a test user
+      const user = new User({ username: "testuser", email: "testuser@example.com", password: "password" });
+      await user.save();
 
-  // Create some test food items
-  const foods = [
-    {
-      title: "Apple",
-      quantity: "10",
-      description: "Fresh apples",
-      image: "http://example.com/apple.jpg",
-    },
-    {
-      title: "Banana",
-      quantity: "6",
-      description: "Fresh bananas",
-      image: "http://example.com/banana.jpg",
-    },
-  ];
+      // Create some test food items
+      const food1 = new Food({ title: "Apple", quantity: "10", description: "Fresh apples", image: "http://example.com/apple.jpg" });
+      const food2 = new Food({ title: "Banana", quantity: "6", description: "Fresh bananas", image: "http://example.com/banana.jpg" });
 
-  for (const food of foods) {
-    const foodItem = new Food(food);
-    await foodItem.save();
-  }
+      await food1.save();
+      await food2.save();
 
-  console.log("Seed data inserted");
-  mongoose.disconnect();
-};
+      console.log("Seed data inserted");
+      mongoose.disconnect();
+    };
 
-seedData().catch((err) => console.error(err));
-
+    seedData().catch(err => console.error(err));
     ```
 
 2. Run the seed script:
@@ -225,9 +200,7 @@ seedData().catch((err) => console.error(err));
     node seed.js
     ```
 
-This version should have all the links fixed. Let me know if there's anything else you need!
-
 
 ## License
 
-This project is licensed under the [ MIT License](https://github.com/christiangubana/inventory.git)
+This project is licensed under the [ MIT License](https://github.com/christiangubana/rest-api.git)
