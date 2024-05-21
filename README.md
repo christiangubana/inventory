@@ -123,7 +123,7 @@ The application requires the following environment variables:
 
     ```sh
     cd server
-    npm start
+    nodemon or npm start
     ```
 
 3. Start the client:
