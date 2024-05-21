@@ -144,6 +144,8 @@ The application requires the following environment variables:
     docker-compose up --build
     ```
 
+You should see something like this in your docker Desktop
+
 ![DOCKER!](https://github.com/christiangubana/inventory-management/blob/main/docker-running-containers.png)
 
 2. Open your browser and navigate to `http://localhost:3000`.
