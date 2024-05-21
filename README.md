@@ -42,6 +42,9 @@ inventory/
 - [Running the Application](#running-the-application)
   - [Local](#local)
   - [Docker](#docker)
+- [Seeding the Database](#seeding-the-database)
+  - [Local](#local-1)
+  - [Docker](#docker-1)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
 - [License](#license)
@@ -149,4 +152,51 @@ You should see something like this in your docker Desktop
 ![DOCKER!](https://github.com/christiangubana/inventory-management/blob/main/docker-running-containers.png)
 
 2. Open your browser and navigate to `http://localhost:3000`.
+
+
+## Seeding the Database
+
+To include initial test data (e.g., a test user and products), follow these instructions:
+
+### Local
+
+1. Create a file named `seed.js` in the `server` directory with the following content:
+
+    ```javascript
+    const mongoose = require("mongoose");
+    const User = require("./models/user.model");
+    const Food = require("./models/food.model");
+
+    const seedData = async () => {
+      const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/testingDb";
+      await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, dbName: "testingDb" });
+
+      // Clear existing data
+      await User.deleteMany({});
+      await Food.deleteMany({});
+
+      // Create a test user
+      const user = new User({ username: "testuser", email: "testuser@example.com", password: "password" });
+      await user.save();
+
+      // Create some test food items
+      const food1 = new Food({ title: "Apple", quantity: "10", description: "Fresh apples", image: "http://example.com/apple.jpg" });
+      const food2 = new Food({ title: "Banana", quantity: "20", description: "Fresh bananas", image: "http://example.com/banana.jpg" });
+
+      await food1.save();
+      await food2.save();
+
+      console.log("Seed data inserted");
+      mongoose.disconnect();
+    };
+
+    seedData().catch(err => console.error(err));
+    ```
+
+2. Run the seed script:
+
+    ```sh
+    cd server
+    node seed.js
+    ```
 
