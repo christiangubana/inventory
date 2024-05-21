@@ -1,8 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const mongoose = require("mongoose");
-const dbConfig = require("./config/db.config");
+const connect = require("./database/connect.js");
 
 const auth = require("./middlewares/auth.js");
 const errors = require("./middlewares/errors.js");
@@ -11,25 +10,8 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-const uri = process.env.MONGODB_URI || dbConfig;
-
-mongoose.Promise = global.Promise;
-mongoose.connect(uri,{
-// mongoose.connect('mongodb://mongo:27017',{  /* <= Change to this to point to Docker image connection*/
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-},6000000)
-  .then(
-    () => {
-      console.log("Database connected");
-    },
-    (error) => {
-      console.log("Database can't be connected: " + error);
-    }
-  );
-
-// Enable CORS for all routes
 app.use(cors());
+app.use(express.json());
 
 // Configure authentication middleware
 auth.authenticateToken.unless = unless;
@@ -42,18 +24,25 @@ app.use(
   })
 );
 
-app.use(express.json());
-
 // Initialize routes
 app.use("/api", require("./routes/users.routes"));
-app.use("/api/foods", require("./routes/food.routes")); // Prefix with /api for food routes
+app.use("/api/foods", require("./routes/food.routes"));
 app.use(express.static("uploads"));
 // app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 app.use(errors.errorHandler);
 
-// Listen for requests
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, function () {
-  console.log(`Server is running on port ${PORT}`);
-});
+const port = process.env.PORT || 8080;
+connect()
+  .then(() => {
+    try {
+      app.listen(port, () => {
+        console.log(`Server running on http://localhost:${port}`);
+      });
+    } catch (error) {
+      console.log("Can't connect to the server");
+    }
+  })
+  .catch((error) => {
+    console.log("Invalid Database Connection...!");
+  });

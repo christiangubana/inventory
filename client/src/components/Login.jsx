@@ -26,7 +26,7 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/login",
+        "http://localhost:8080/api/login",
         formData
       );
       const token = response.data.data.token;
@@ -66,7 +66,7 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
               data-name="Layer 1"
               xmlns="http://www.w3.org/2000/svg"
               width="100%"
-              height="100%"
+              height="auto"
               viewBox="0 0 744.84799 747.07702"
             >
               <path
@@ -132,7 +132,7 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
                 x="218.56201"
                 y="447.10197"
                 width="218.552"
-                height="2.047"
+                height="auto"
                 fill="#ccc"
               />
               <circle
@@ -149,7 +149,7 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
                 x="218.56201"
                 y="516.11803"
                 width="218.552"
-                height="2.047"
+                height="auto"
                 fill="#ccc"
               />
               <circle

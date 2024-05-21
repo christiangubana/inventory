@@ -1,8 +1,8 @@
 # Use Node.js LTS version as base image
-FROM node:lts-alpine
+FROM node:lts
 
 # Set working directory inside the container
-WORKDIR /app/server
+WORKDIR /app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
@@ -15,7 +15,7 @@ RUN npm install
 COPY . .
 
 # Expose port
-EXPOSE 4000
+EXPOSE 8080
 
 # Command to run the application
 CMD ["npm", "start"]

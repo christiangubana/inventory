@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const Registration = () => {
-  const [isLoading, setIsLoading] = useState(false); // State for loading indicator
+  const [isLoading, setIsLoading] = useState(false); 
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -22,31 +22,29 @@ const Registration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true); // Start loading
+    setIsLoading(true); 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/register",
+        "http://localhost:8080/api/register",
         formData
       );
       toast.success(response.data.message, {
         position: "top-center",
       });
-      navigate("/login"); // Redirect here before going straigh to the Dashboard
+      navigate("/login"); 
     } catch (error) {
-      console.error("Regitration failed:", error); // Handle error
+      console.error("Regitration failed:", error); 
       if (
         error.response &&
         error.response.data &&
         error.response.data.message
       ) {
-        // Display server response error message
         toast.error(error.response.data.message);
       } else {
-        // Display generic error message if server response is not available
-        toast.error("Failed to register. Please try again.");
+        toast.error(`Failed to register, ${error.message} Please try again`);
       }
     } finally {
-      setIsLoading(false); // Stop loading regardless of success or failure
+      setIsLoading(false); 
     }
   };
 

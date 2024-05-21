@@ -14,7 +14,7 @@ const EditFoodForm = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `http://localhost:4000/api/foods/${itemId}`,
+          `http://localhost:8080/api/foods/${itemId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -38,7 +38,7 @@ const EditFoodForm = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:4000/api/foods/${itemId}`,
+        `http://localhost:8080/api/foods/${itemId}`,
         updatedFood,
         {
           headers: {

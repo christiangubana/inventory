@@ -74,13 +74,13 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
 
       if (isUpdating) {
         const response = await axios.put(
-          `http://localhost:4000/api/foods/${initialData._id}`,
+          `http://localhost:8080/api/foods/${initialData._id}`,
           formData,
           config
         );
         onUpdate(response.data.food);
       } else {
-        await axios.post(`http://localhost:4000/api/foods`, formData, config);
+        await axios.post(`http://localhost:8080/api/foods`, formData, config);
         toast.success("Food item added successfully", {
           position: "top-center",
         });

@@ -19,7 +19,7 @@ const Dashboard = () => {
           throw new Error("Token not found in local storage");
         }
 
-        const response = await axios.get("http://localhost:4000/api/foods", {
+        const response = await axios.get("http://localhost:8080/api/foods", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -36,7 +36,7 @@ const Dashboard = () => {
 
   const handleDelete = async (foodId) => {
     try {
-      await axios.delete(`http://localhost:4000/api/foods/${foodId}`, {
+      await axios.delete(`http://localhost:8080/api/foods/${foodId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
