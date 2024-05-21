@@ -26,9 +26,6 @@ $ git clone https://github.com/christiangubana/inventory.git
     └── docker-compose.yml
 ```
 
-
-## Usage (run full-stack app on your machine)
-
 ## Prerequisites
 - [MongoDB](https://www.mongodb.com/)
 - [Node](https://nodejs.org/en/download/) ^20.0.0
