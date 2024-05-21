@@ -225,3 +225,9 @@ seedData().catch((err) => console.error(err));
     node seed.js
     ```
 
+This version should have all the links fixed. Let me know if there's anything else you need!
+
+
+## License
+
+This project is licensed under the [ MIT License](https://github.com/christiangubana/inventory.git)
