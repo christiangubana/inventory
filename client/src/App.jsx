@@ -14,6 +14,7 @@ const EditFoodForm = React.lazy(() => import("./components/EditFoodForm"));
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUserName] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -22,7 +23,12 @@ function App() {
       setIsLoggedIn(true);
       setUserName(storedUsername);
     }
+    setLoading(false); // Set loading to false after checking localStorage
   }, []);
+
+  if (loading) {
+    return <Loading />; // Show loading indicator while checking authentication
+  }
 
   return (
     <>
@@ -39,10 +45,6 @@ function App() {
             element={
               <Login setIsLoggedIn={setIsLoggedIn} setUserName={setUserName} />
             }
-          />
-          <Route
-            path="/dashboard"
-            element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />}
           />
           <Route
             path="/register"
