@@ -207,11 +207,11 @@ To include initial test data (e.g., a test user and products), follow these inst
 
 2. Build and start the Docker containers, which will automatically run the seed script:
 
-        ```sh
-        cd inventory
-        docker-compose down
-        docker-compose up --build
-        ```
+   ```sh
+    cd inventory
+    docker-compose down
+    docker-compose up --build
+    ```
 
 The backend service will run the `seed.js` script if it exists and then start the application.
 
