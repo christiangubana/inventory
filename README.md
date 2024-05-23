@@ -206,24 +206,24 @@ To include initial test data (e.g., a test user and products), follow these inst
 
 2. Run the seed script:
 
-option 1: with docker container
+1. option with docker container
 
-    ```
+
+    ```sh
     cd inventory
     docker-compose down
     docker-compose up --build
-    ```    
-
-option 2: with docker container
-
     ```
+
+2. option with docker container
+
+    ```sh
     cd inventory
     docker-compose run seed
     ```
+3. option in local env
 
-option 3 in local env
-
-    ```
+    ```sh
     cd server
     node seed.js
     ```
