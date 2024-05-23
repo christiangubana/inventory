@@ -178,51 +178,48 @@ To include initial test data (e.g., a test user and products), follow these inst
         await User.deleteMany({});
         await Food.deleteMany({});
 
-    // Create a test user
-    const salt = bcrypt.genSaltSync(10);
-    const testUser = new User({
-        username: 'testuser',
-        email: 'testuser@example.com',
-        password: bcrypt.hashSync('password', salt),
-    });
-    await testUser.save();
+        // Create a test user
+        const salt = bcrypt.genSaltSync(10);
+        const testUser = new User({
+            username: 'testuser',
+            email: 'testuser@example.com',
+            password: bcrypt.hashSync('password', salt),
+        });
+        await testUser.save();
 
-    // Create some test food items
-    const foods = [
-        { title: 'Apple', quantity: '10', description: 'Fresh apples', image: 'http://example.com/apple.jpg' },
-        { title: 'Banana', quantity: '6', description: 'Fresh bananas', image: 'http://example.com/banana.jpg' },
-    ];
+        // Create some test food items
+        const foods = [
+            { title: 'Apple', quantity: '10', description: 'Fresh apples', image: 'http://example.com/apple.jpg' },
+            { title: 'Banana', quantity: '6', description: 'Fresh bananas', image: 'http://example.com/banana.jpg' },
+        ];
 
-    for (const food of foods) {
-        const foodItem = new Food(food);
-        await foodItem.save();
-    }
+        for (const food of foods) {
+            const foodItem = new Food(food);
+            await foodItem.save();
+        }
 
-    console.log('Seed data inserted');
-    mongoose.disconnect();
-    };
+        console.log('Seed data inserted');
+        mongoose.disconnect();
+        };
 
-    seedData().catch(err => console.error(err));
+        seedData().catch(err => console.error(err));
 
 2. Run the seed script:
 
 option 1: with docker container
-
     ```sh
     cd inventory
     docker-compose down
     docker-compose up --build
     ```
-
+    
 option 2: with docker container
-
     ```sh
     cd inventory
     docker-compose run seed
     ```
 
 option 3 in local env
-
     ```sh
     cd server
     node seed.js
