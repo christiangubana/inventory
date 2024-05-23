@@ -146,6 +146,7 @@ The application requires the following environment variables:
     cd inventory
     docker-compose up --build
     ```
+This command will build and start the frontend, backend, and MongoDB services. The backend service will automatically seed the database if the `seed.js` file is present.
 
 You should see something like this in your docker Desktop
 
@@ -204,9 +205,7 @@ To include initial test data (e.g., a test user and products), follow these inst
 
         seedData().catch(err => console.error(err));
 
-2. Run the seed script:
-
-    1. option with docker container
+2. Build and start the Docker containers, which will automatically run the seed script:
 
         ```sh
         cd inventory
@@ -214,18 +213,7 @@ To include initial test data (e.g., a test user and products), follow these inst
         docker-compose up --build
         ```
 
-    2. option with docker container
-
-        ```sh
-        cd inventory
-        docker-compose run seed
-        ```
-    3. option in local env
-
-        ```sh
-        cd server
-        node seed.js
-        ```
+The backend service will run the `seed.js` script if it exists and then start the application.
 
 ## License
 

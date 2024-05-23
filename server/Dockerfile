@@ -16,5 +16,5 @@ COPY . .
 # Expose the port the app runs on
 EXPOSE 8080
 
-# Start the application
-CMD ["npm", "start"]
+# Run the seed script if it exists, then start the application
+CMD ["sh", "-c", "if [ -f seed.js ]; then node seed.js; fi && npm start"]
