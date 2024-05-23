@@ -8,16 +8,13 @@ const Dashboard = () => {
   const [foods, setFoods] = useState([]);
   const chartRef = useRef(null);
   const navigate = useNavigate();
-
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchFoods = async () => {
       try {
         const token = localStorage.getItem("token");
-        if (!token) {
-          throw new Error("Token not found in local storage");
-        }
+        if (!token) throw new Error("Token not found in local storage");
 
         const response = await axios.get("http://localhost:8080/api/foods", {
           headers: {
@@ -82,7 +79,6 @@ const Dashboard = () => {
     const options = {
       scales: {
         y: {
-          type: "linear",
           beginAtZero: true,
           title: {
             display: true,
@@ -93,24 +89,20 @@ const Dashboard = () => {
     };
 
     if (chartRef.current) {
-      // Destroy previous chart instance
       if (chartRef.current.chartInstance) {
         chartRef.current.chartInstance.destroy();
       }
 
-      // Render new chart
       newChartInstance = new Chart(chartRef.current, {
         type: "bar",
         data: prepareChartData(),
         options: options,
       });
 
-      // Update chartRef with the new chart instance
       chartRef.current.chartInstance = newChartInstance;
     }
 
     return () => {
-      // Cleanup: Destroy chart instance on component unmount
       if (newChartInstance) {
         newChartInstance.destroy();
       }
@@ -122,7 +114,7 @@ const Dashboard = () => {
       <div className="py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-6">Dashboard</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {foods.length === 0 ? (
               <p className="text-center text-gray-500">
                 There's no item to show. Start adding new items to the list.
@@ -131,7 +123,7 @@ const Dashboard = () => {
               foods.map((food) => (
                 <div
                   key={food._id}
-                  className="rounded-lg overflow-hidden shadow-md"
+                  className="bg-white rounded-lg overflow-hidden shadow-md transition duration-300 transform hover:-translate-y-1 hover:shadow-lg"
                 >
                   <img
                     className="w-full h-48 object-cover"
@@ -162,7 +154,6 @@ const Dashboard = () => {
                         <button
                           onClick={() => handleDelete(food._id)}
                           className="text-red-500 hover:text-red-700 focus:outline-none bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2"
-
                         >
                           Delete
                         </button>
@@ -177,21 +168,22 @@ const Dashboard = () => {
             )}
           </div>
 
-          {/* Chart */}
           <div className="mt-8">
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">
               Inventory Levels
             </h2>
-            <canvas
-              ref={chartRef}
-              style={{ maxWidth: "100%", height: "auto" }}
-            ></canvas>
+            <div className="bg-white rounded-lg shadow-md p-4">
+              <canvas
+                ref={chartRef}
+                style={{ maxWidth: "100%", height: "auto" }}
+              ></canvas>
+            </div>
           </div>
 
           <div className="flex justify-end mt-6">
             <button
               onClick={() => navigate("/add")}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none"
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none transition duration-300"
             >
               Add New Item
             </button>
