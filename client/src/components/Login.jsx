@@ -30,9 +30,11 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
         formData
       );
       const token = response.data.data.token;
+      const username = response.data.data.username; // Assuming the API response includes the username
       localStorage.setItem("token", token);
+      localStorage.setItem("username", username); // Store username in local storage
       setIsLoggedIn(true);
-      setUserName(formData.username);
+      setUserName(username); // Update the username state in the parent component
       toast.success(response.data.message, {
         position: "top-center",
       });
