@@ -50,16 +50,19 @@ function App() {
             path="/register"
             element={<Registration setIsLoggedIn={setIsLoggedIn} />}
           />
+          {/* Redirect root path to /login */}
+          <Route path="/" element={<Navigate to="/login" />} />
           {/* Protected Routes */}
           {isLoggedIn ? (
             <>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/add" element={<AddFoodForm />} />
               <Route path="/edit/:itemId" element={<EditFoodForm />} />
+              <Route path="*" element={<Navigate to="/dashboard" />} /> {/* Redirect to dashboard if logged in */}
             </>
           ) : (
             <>
-              {/* Redirect to login if not logged in */}
+              {/* Redirect all other paths to login if not logged in */}
               <Route path="*" element={<Navigate to="/login" />} />
             </>
           )}
