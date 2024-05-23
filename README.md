@@ -56,6 +56,7 @@ inventory/
 - Responsive UI with React
 - RESTful API with Express
 - MongoDB for data storage
+- JSON Web Token (JWT)
 
 ## Prerequisites
 
