@@ -4,7 +4,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Layout/NavBar";
 import Loading from "./components/Screens/Global/Loading";
-import useAuth from "./hooks/useAuth";
 
 const Registration = React.lazy(() => import("./components/Register"));
 const Login = React.lazy(() => import("./components/Login"));
