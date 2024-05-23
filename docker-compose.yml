@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   client:
@@ -17,13 +17,20 @@ services:
     ports:
       - "8080:8080"
     environment:
-      MONGODB_URI: mongodb://mongo:27017
+      MONGODB_URI: mongodb://mongo:27017/testingDb
     depends_on:
       - mongo
-    # command: sh -c "npm start && node seed.js"
+
+  seed:
+    build:
+      context: ./server
+    image: backend
+    depends_on:
+      - server
+    command: sh -c "node seed.js || echo 'Seed script not found, skipping seeding.'"
 
   mongo:
-    image: mongo
+    image: mongo:latest
     ports:
       - "27017:27017"
     volumes:

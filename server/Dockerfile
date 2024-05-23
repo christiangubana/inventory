@@ -1,24 +1,20 @@
-# Use Node.js LTS version as base image
-FROM node:lts-alpine
+# Use an official Node.js runtime as a parent image
+FROM node:18
 
-# Set working directory inside the container
-WORKDIR /app/server
+# Set the working directory in the container
+WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
+# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install -g nodemon
 RUN npm install
 
-# Copy the rest of the application code
+# Copy the rest of the application code to the working directory
 COPY . .
 
-# Copy seed.js for seeding the database
-COPY seed.js ./
-
-# Expose port
+# Expose the port the app runs on
 EXPOSE 8080
 
-# Command to run the application
+# Start the application
 CMD ["npm", "start"]
