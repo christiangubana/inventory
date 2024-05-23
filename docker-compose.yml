@@ -26,8 +26,10 @@ services:
       context: ./server
     image: backend
     depends_on:
-      - server
+      - mongo
     command: sh -c "node seed.js || echo 'Seed script not found, skipping seeding.'"
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/testingDb
 
   mongo:
     image: mongo:latest
