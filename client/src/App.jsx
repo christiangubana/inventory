@@ -15,19 +15,13 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUserName] = useState(null);
 
-  console.log(`username FROM App is ${username}`);
-
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-    }
-
     const storedUsername = localStorage.getItem("username");
-    if (storedUsername) {
+    if (token && storedUsername) {
+      setIsLoggedIn(true);
       setUserName(storedUsername);
     }
-    console.log("username FROM App:", storedUsername); // This sh
   }, []);
 
   return (
@@ -36,7 +30,6 @@ function App() {
         isLoggedIn={isLoggedIn}
         setIsLoggedIn={setIsLoggedIn}
         username={username}
-       
       />
       <ToastContainer />
       <Suspense fallback={<Loading />}>
