@@ -4,7 +4,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Layout/NavBar";
 import Loading from "./components/Screens/Global/Loading";
-import useAuth from "./hooks/useAuth"
 
 const Registration = React.lazy(() => import("./components/Register"));
 const Login = React.lazy(() => import("./components/Login"));
@@ -14,27 +13,43 @@ const EditFoodForm = React.lazy(() => import("./components/EditFoodForm"));
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState("");
+  const [username, setUserName] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
+    const storedUsername = localStorage.getItem("username");
+    if (token && storedUsername) {
       setIsLoggedIn(true);
+      setUserName(storedUsername);
     }
+    setLoading(false); // Set loading to false after checking localStorage
   }, []);
 
-  // Apply useAuth hook to protect dashboard and related routes
-  // useAuth(isLoggedIn);
+  if (loading) {
+    return <Loading />; // Show loading indicator while checking authentication
+  }
 
   return (
     <>
-      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userName={userName} />
+      <Navbar
+        isLoggedIn={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn}
+        username={username}
+      />
       <ToastContainer />
       <Suspense fallback={<Loading />}>
         <Routes>
-          <Route path="/" element={<Navigate to="/dashboard" />} />
-          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserName={setUserName} />} />
-          <Route path="/register" element={<Registration setIsLoggedIn={setIsLoggedIn} />} />
+          <Route
+            path="/login"
+            element={
+              <Login setIsLoggedIn={setIsLoggedIn} setUserName={setUserName} />
+            }
+          />
+          <Route
+            path="/register"
+            element={<Registration setIsLoggedIn={setIsLoggedIn} />}
+          />
           {/* Protected Routes */}
           {isLoggedIn ? (
             <>

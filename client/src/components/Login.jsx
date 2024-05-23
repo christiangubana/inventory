@@ -11,7 +11,7 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
   });
 
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false); // State for loading indicator
+  const [isLoading, setIsLoading] = useState(false); 
 
   const handleChange = (e) => {
     setFormData({
@@ -21,8 +21,8 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    setIsLoading(true); // Start loading
+    e.preventDefault(); 
+    setIsLoading(true); 
 
     try {
       const response = await axios.post(
@@ -30,9 +30,11 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
         formData
       );
       const token = response.data.data.token;
+      const username = response.data.data.username; 
       localStorage.setItem("token", token);
+      localStorage.setItem("username", username); 
       setIsLoggedIn(true);
-      setUserName(formData.username);
+      setUserName(username); 
       toast.success(response.data.message, {
         position: "top-center",
       });
