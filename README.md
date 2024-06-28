@@ -6,7 +6,7 @@
 
 ## Summary
 
-This is a Full-Stack((MongoDB, Express, React, Node.js) web application for managing inventory. The application includes authentication, CRUD operations for managing users and inventory items, and more.
+This is a Full-Stack MERN(MongoDB,Express.js,React.js,Node.js) web application facilitating superusers to manage inventory items.
 
 This `README.md` file provides a comprehensive guide for setting up and running your MERN web application both locally and with Docker, including necessary prerequisites, environment variables, and instructions for running the application.
 
@@ -57,7 +57,8 @@ inventory/
 - RESTful API with Express
 - MongoDB for data storage
 - JSON Web Token (JWT)
-
+- Graph/Chart to dynamically Indicat inventory levels
+  
 ## Prerequisites
 
 - Node.js (LTS version recommended)
