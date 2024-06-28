@@ -61,7 +61,7 @@ inventory/
   
 ## Tech Stacks: Backend
 
-- Node.Js 
+- Node.Js
 - Express.Js
 - Mongo Database
 - AWS (For deployment)
