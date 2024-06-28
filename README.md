@@ -59,6 +59,21 @@ inventory/
 - JSON Web Token (JWT)
 - Graph/Chart to dynamically Indicat inventory levels
   
+## Tech Stacks: Backend
+
+- Node.Js 
+- Express.Js
+- Mongo Database
+- AWS (For deployment)
+- CI/CD
+- Docker ( Enhance Deployment)
+
+## Tech Stacks: Frontend
+
+- JavaScript
+- React.js
+- TailwindCSS
+
 ## Prerequisites
 
 - Node.js (LTS version recommended)
