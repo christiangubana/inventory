@@ -62,7 +62,7 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
     if (!validateForm()) {
       return;
     }
-    
+
     const token = localStorage.getItem("token");
     try {
       const config = {
@@ -110,14 +110,14 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
         className="w-full max-w-md bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
       >
         <h1 className="text-2xl font-bold text-gray-900 mb-4 text-center">
-          {mode === "edit" ? "Edit Food Item" : "Add New Food Item"}
+          {mode === "edit" ? "Edit Item" : "Add New Item"}
         </h1>
         <div className="mb-4">
           <label
             htmlFor="title"
             className="block text-gray-700 text-sm font-bold mb-2"
           >
-            Food Title
+            Item Name
           </label>
           <input
             type="text"
@@ -128,7 +128,7 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
             className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
               errors.title ? "border-red-500" : ""
             }`}
-            placeholder="Food item title"
+            placeholder="Item title"
           />
           {errors.title && (
             <p className="text-red-500 text-xs italic">{errors.title}</p>
@@ -139,7 +139,7 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
             htmlFor="title"
             className="block text-gray-700 text-sm font-bold mb-2"
           >
-            Food Quantity
+            Item Quantity
           </label>
           <input
             type="number"
@@ -150,7 +150,7 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
             className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
               errors.quantity ? "border-red-500" : ""
             }`}
-            placeholder="Food item quantity"
+            placeholder="Item quantity"
           />
           {errors.quantity && (
             <p className="text-red-500 text-xs italic">{errors.quantity}</p>
@@ -161,7 +161,7 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
             htmlFor="description"
             className="block text-gray-700 text-sm font-bold mb-2"
           >
-            Food Description
+            Item Description
           </label>
           <input
             type="text"
@@ -172,7 +172,7 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
             className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
               errors.description ? "border-red-500" : ""
             }`}
-            placeholder="Food description"
+            placeholder="Item description"
           />
           {errors.description && (
             <p className="text-red-500 text-xs italic">{errors.description}</p>
@@ -183,7 +183,7 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
             htmlFor="image"
             className="block text-gray-700 text-sm font-bold mb-2"
           >
-            Food Image
+            Item Image
           </label>
           <input
             type="file"
@@ -204,7 +204,7 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
           >
-            {isUpdating ? "Update Food Item" : "Add Food Item"}
+            {isUpdating ? "Update Item" : "Add Item"}
           </button>
           {isUpdating && (
             <button
