@@ -3,9 +3,11 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Chart from "chart.js/auto";
+import { jwtDecode } from "jwt-decode";
 
 const Dashboard = () => {
   const [foods, setFoods] = useState([]);
+  const [logoutMessage, setLogoutMessage] = useState(false);
   const chartRef = useRef(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -29,7 +31,26 @@ const Dashboard = () => {
     };
 
     fetchFoods();
-  }, []);
+
+    //Decode token to get the expiration time
+    const decodedToken = jwtDecode(token);
+    const expirationTime = decodedToken.exp * 1000; // Convert to millseconds
+
+    //Calculate the time remaining until the token expires
+    const timeRemaining = expirationTime - Date.now();
+
+    //Set a timeout to show the logout message 5 seconds before the token expires
+    const timeoutId = setTimeout(() => {
+      setLogoutMessage(true);
+      setTimeout(() => {
+        localStorage.removeItem("token");
+        navigate("/login");
+      }, 5000)
+    }, timeRemaining - 5000);
+
+    //Cleanup the timeout on component unmout
+    return () => clearTimeout(timeoutId);
+  }, [navigate, token]);
 
   const handleDelete = async (foodId) => {
     try {
@@ -128,7 +149,8 @@ const Dashboard = () => {
                   <img
                     className="w-full h-48 object-cover"
                     alt={food.title}
-                    src={`https://source.unsplash.com/300x200/?food,${food.title}`}
+                    src={`https://picsum.photos/300/200?random=${Math.random()}&keyword=food`}
+                    //src={`https://source.unsplash.com/300x200/?food,${food.title}`} //Unsplash is currently down
                   />
                   <div className="px-4 py-4">
                     <h2 className="text-lg font-semibold text-gray-900 mb-2">
@@ -188,6 +210,14 @@ const Dashboard = () => {
               Add New Item
             </button>
           </div>
+          {logoutMessage && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+              <div className="bg-white p-8 rounded shadow-lg text-center">
+                <h2 className="text-2xl font-bold mb-4">You're being logged out</h2>
+                <p className="text-gray-700">Please log in again to continue.</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
