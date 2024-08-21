@@ -9,12 +9,13 @@ const EditFoodForm = () => {
   const navigate = useNavigate();
   const [foodData, setFoodData] = useState(null);
 
+  const baseURL = 'http://localhost:8080'
   useEffect(() => {
     const fetchFoodItem = async () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `http://localhost:8080/api/foods/${itemId}`,
+          `${baseURL}/api/foods/${itemId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -38,7 +39,7 @@ const EditFoodForm = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:8080/api/foods/${itemId}`,
+        `${baseURL}/api/foods/${itemId}`,
         updatedFood,
         {
           headers: {

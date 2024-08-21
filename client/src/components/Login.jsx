@@ -10,6 +10,7 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
     password: "",
   });
 
+  const baseURL = 'http://localhost:8080';
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false); 
 
@@ -26,7 +27,7 @@ const Login = ({ setIsLoggedIn, setUserName }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/login",
+        `${baseURL}/api/login`,
         formData
       );
       const token = response.data.data.token;

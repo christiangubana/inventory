@@ -11,6 +11,7 @@ const Registration = () => {
     password: "",
   });
 
+  const baseURL = 'http://localhost:8080';
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -25,7 +26,7 @@ const Registration = () => {
     setIsLoading(true); 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/register",
+        `${baseURL}/api/register`,
         formData
       );
       toast.success(response.data.message, {

@@ -14,6 +14,7 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
   const [errors, setErrors] = useState({});
   const isUpdating = !!initialData;
   const navigate = useNavigate();
+  const baseURL = '${baseURL}';
 
   const handleChange = (e) => {
     setFormData({
@@ -74,13 +75,13 @@ const AddFoodForm = ({ initialData, onUpdate, onCancelEdit, mode }) => {
 
       if (isUpdating) {
         const response = await axios.put(
-          `http://localhost:8080/api/foods/${initialData._id}`,
+          `${baseURL}/api/foods/${initialData._id}`,
           formData,
           config
         );
         onUpdate(response.data.food);
       } else {
-        await axios.post(`http://localhost:8080/api/foods`, formData, config);
+        await axios.post(`${baseURL}/api/foods`, formData, config);
         toast.success("Food item added successfully", {
           position: "top-center",
         });

@@ -11,6 +11,7 @@ const Dashboard = () => {
   const chartRef = useRef(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const baseURL = 'http://localhost:8080'
 
   useEffect(() => {
     const fetchFoods = async () => {
@@ -18,7 +19,7 @@ const Dashboard = () => {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("Token not found in local storage");
 
-        const response = await axios.get("http://localhost:8080/api/foods", {
+        const response = await axios.get(`${baseURL}/api/foods`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -54,7 +55,7 @@ const Dashboard = () => {
 
   const handleDelete = async (foodId) => {
     try {
-      await axios.delete(`http://localhost:8080/api/foods/${foodId}`, {
+      await axios.delete(`${baseURL}/api/foods/${foodId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
