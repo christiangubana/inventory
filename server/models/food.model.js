@@ -4,8 +4,9 @@ const { Schema } = mongoose;
 
 const FoodSchema = new Schema({
   title: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
+    ref: 'User'
   },
   quantity: {
     type: String,
